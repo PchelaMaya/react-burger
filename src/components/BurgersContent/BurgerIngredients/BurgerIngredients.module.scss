@@ -1,0 +1,21 @@
+.burgeringredients {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+
+  .ingredientsitem {
+    max-height: 756px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  .itemcontent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    width: 100%;
+  }
+}

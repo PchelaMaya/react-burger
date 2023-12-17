@@ -1,0 +1,30 @@
+header {
+  display: flex;
+  background: #1c1c21;
+  margin: 40px auto;
+  max-width: 1920px;
+  width: 100%;
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1280px;
+    margin: 0 auto;
+
+    .navigation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .content {
+      display: flex;
+      column-gap: 8px;
+
+      cursor: pointer;
+    }
+  }
+  .logo {
+    margin-left: auto;
+    margin-right: 288px;
+  }
+}
