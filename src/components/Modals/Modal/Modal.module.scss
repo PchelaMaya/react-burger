@@ -3,7 +3,7 @@
   display: flex;
   max-width: 720px;
   width: 100%;
-  height: 718px;
+  height: max-content;
   background-color: #1c1c21;
   margin-left: -360px;
   position: fixed;
@@ -25,5 +25,6 @@
     cursor: pointer;
     padding: 0;
     margin-bottom: 20px;
+    z-index: 1001;
   }
 }

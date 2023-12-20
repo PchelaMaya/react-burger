@@ -11,16 +11,13 @@ import styles from "./BurgerConstructor.module.scss";
 
 export const BurgerConstructor: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  console.log(isOpenModal);
 
   const openModal = () => {
     setIsOpenModal(true);
-    console.log(isOpenModal);
   };
 
   const closeModal = () => {
     setIsOpenModal(false);
-    console.log(isOpenModal);
   };
 
   const cratorBun = "https://code.s3.yandex.net/react/code/bun-02.png";

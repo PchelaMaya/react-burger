@@ -13,7 +13,7 @@ export const Modal: React.FC<{ onClose: () => void; children: any }> = ({
     <>
       <ModalOverlay onClose={onClose} />
       <div className={styles.modalcontent}>
-        <div className={`${styles.closebutton}`}>
+        <div className={styles.closebutton}>
           <CloseIcon onClick={onClose} type="primary" />
         </div>
         {children}
