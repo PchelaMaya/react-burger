@@ -1,12 +1,28 @@
+import React, { useState } from "react";
 import {
   Button,
   ConstructorElement,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./BurgerConstructor.module.scss";
 import { ConstructorContent } from "./ConstructorContent/ConstructorContent";
+import { ModalOrder } from "../../Modals/ModalOrder/ModalOrder";
+import { Modal } from "../../Modals/Modal/Modal";
+import styles from "./BurgerConstructor.module.scss";
 
-export const BurgerConstructor = () => {
+export const BurgerConstructor: React.FC = () => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  console.log(isOpenModal);
+
+  const openModal = () => {
+    setIsOpenModal(true);
+    console.log(isOpenModal);
+  };
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+    console.log(isOpenModal);
+  };
+
   const cratorBun = "https://code.s3.yandex.net/react/code/bun-02.png";
 
   return (
@@ -31,10 +47,21 @@ export const BurgerConstructor = () => {
         <p className={`${styles.price} text text_type_digits-medium`}>
           610 <CurrencyIcon type="primary" />
         </p>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="large"
+          onClick={openModal}
+        >
           Оформить заказ
         </Button>
       </div>
+
+      {isOpenModal && (
+        <Modal onClose={closeModal}>
+          <ModalOrder />
+        </Modal>
+      )}
     </section>
   );
 };
