@@ -1,24 +1,16 @@
-import React, { useState } from "react";
 import {
   Button,
   ConstructorElement,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorContent } from "./ConstructorContent/ConstructorContent";
-import { ModalOrder } from "../../Modals/ModalOrder/ModalOrder";
 import { Modal } from "../../Modals/Modal/Modal";
 import styles from "./BurgerConstructor.module.scss";
+import { useModal } from "../../../hooks/useModal";
+import { OrderDetails } from "../../Modals/OrderDetails/OrderDetails";
 
-export const BurgerConstructor: React.FC = () => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const openModal = () => {
-    setIsOpenModal(true);
-  };
-
-  const closeModal = () => {
-    setIsOpenModal(false);
-  };
+export const BurgerConstructor = () => {
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const cratorBun = "https://code.s3.yandex.net/react/code/bun-02.png";
 
@@ -54,9 +46,9 @@ export const BurgerConstructor: React.FC = () => {
         </Button>
       </div>
 
-      {isOpenModal && (
+      {isModalOpen && (
         <Modal onClose={closeModal}>
-          <ModalOrder />
+          <OrderDetails />
         </Modal>
       )}
     </section>

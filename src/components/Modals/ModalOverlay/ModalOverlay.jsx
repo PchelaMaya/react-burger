@@ -1,21 +1,21 @@
 import styles from "./ModalOverlay.module.scss";
 import PropTypes from "prop-types";
-import { useEffect, MouseEvent, FC } from "react";
+import { useEffect } from "react";
 
-const ModalOverlay = (props?: any) => {
+const ModalOverlay = (props) => {
   useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        props.onClose(false);
+      }
+    };
+
     document.addEventListener("keydown", handleEscape);
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
     };
   }, []);
-
-  const handleEscape = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      props.onClose(false);
-    }
-  };
 
   return (
     <div className={styles.overlay} onClick={() => props.onClose(false)} />

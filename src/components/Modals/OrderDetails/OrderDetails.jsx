@@ -1,9 +1,9 @@
 import { Modal } from "../Modal/Modal";
 import PropTypes from "prop-types";
-import styles from "./ModalOrder.module.scss";
+import styles from "./OrderDetails.module.scss";
 import { SuccessOrder } from "../../../images/successOrder";
 
-export const ModalOrder = () => {
+export const OrderDetails = () => {
   return (
     <div className={styles.modalorder}>
       <h3 className={`text text_type_digits-large mt-10 mb-8 ${styles.number}`}>

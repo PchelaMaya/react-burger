@@ -2,14 +2,13 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ingredientPropType } from "../../types";
+import { ingredientPropType } from "../../../../utils/types";
 import styles from "./IngredientContent.module.scss";
-import PropTypes from "prop-types";
 import { useState } from "react";
-import { ModalIngredientInfo } from "../../../Modals/ModalIngredientInfo/ModalIngredientInfo";
+import { IngredientDetails } from "../../../Modals/IngredientDetails/IngredientDetails";
 import { Modal } from "../../../Modals/Modal/Modal";
 
-export const IngredientContent = (props: any) => {
+export const IngredientContent = (props) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
@@ -19,7 +18,7 @@ export const IngredientContent = (props: any) => {
         onClick={() => setIsOpenModal(true)}
       >
         <div className={styles.image}>
-          <img src={props.data.image} />
+          <img src={props.data.image} alt={props.data.name} />
           <Counter count={1} />
         </div>
         <p className="text text_type_digits-default">
@@ -29,7 +28,7 @@ export const IngredientContent = (props: any) => {
       </div>
       {isOpenModal && (
         <Modal onClose={() => setIsOpenModal(false)}>
-          <ModalIngredientInfo data={props.data} />
+          <IngredientDetails data={props.data} />
         </Modal>
       )}
     </>

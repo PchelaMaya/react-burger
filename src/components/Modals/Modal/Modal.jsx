@@ -5,10 +5,9 @@ import PropTypes from "prop-types";
 import styles from "./Modal.module.scss";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
-export const Modal: React.FC<{ onClose: () => void; children: any }> = ({
-  onClose,
-  children,
-}) => {
+const modals = document.getElementById("modals");
+
+export const Modal = ({ onClose, children }) => {
   return createPortal(
     <>
       <ModalOverlay onClose={onClose} />
@@ -19,7 +18,7 @@ export const Modal: React.FC<{ onClose: () => void; children: any }> = ({
         {children}
       </div>
     </>,
-    document.body
+    modals
   );
 };
 

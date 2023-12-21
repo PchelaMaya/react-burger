@@ -1,13 +1,13 @@
-import { ingredientPropType } from "../../BurgersContent/types";
+import { ingredientPropType } from "../../../utils/types";
 import { Modal } from "../Modal/Modal";
-import styles from "./ModalIngredientInfo.module.scss";
+import styles from "./IngredientDetails.module.scss";
 import PropTypes from "prop-types";
 
-export const ModalIngredientInfo = (props: any) => {
+export const IngredientDetails = (props) => {
   return (
     <div className={styles.ingredientinfo}>
       <h3 className="text text_type_main-large">Детали ингридиента</h3>
-      <img src={props.data?.image_large} />
+      <img src={props.data?.image_large} alt={props.data.name} />
 
       <div className={styles.infocontent}>
         <p className="text text_type_main-medium mt-2">{props.data?.name}</p>
@@ -66,12 +66,6 @@ export const ModalIngredientInfo = (props: any) => {
   );
 };
 
-ModalIngredientInfo.propTypes = {
-  data: PropTypes.shape({
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    proteins: PropTypes.number,
-    image_large: PropTypes.string,
-  }).isRequired,
+IngredientDetails.propTypes = {
+  data: ingredientPropType.isRequired,
 };

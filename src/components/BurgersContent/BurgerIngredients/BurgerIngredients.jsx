@@ -2,14 +2,13 @@ import { Tabs } from "./Tabs/Tabs";
 import styles from "./BurgerIngredients.module.scss";
 import { IngredientContent } from "./IngredientsContent/IngredientContent";
 import PropTypes from "prop-types";
-import { ingredientPropType } from "../types";
+import { ingredientPropType } from "../../../utils/types";
 
-export const BurgerIngredients = (props: any) => {
-  const bunsData = props.data?.filter((bun: any) => bun.type === "bun") || [];
-  const sauceData =
-    props.data?.filter((sauce: any) => sauce.type === "sauce") || [];
+export const BurgerIngredients = (props) => {
+  const bunsData = props.data?.filter((bun) => bun.type === "bun") || [];
+  const sauceData = props.data?.filter((sauce) => sauce.type === "sauce") || [];
   const flavoursData =
-    props.data?.filter((flavour: any) => flavour.type === "main") || [];
+    props.data?.filter((flavour) => flavour.type === "main") || [];
 
   return (
     <section className={`mt-10 ${styles.burgeringredients}`}>
@@ -21,7 +20,7 @@ export const BurgerIngredients = (props: any) => {
             Булки
           </h3>
           <div className={`mt-6 ${styles.itemcontent}`}>
-            {bunsData.map((buns: any) => (
+            {bunsData.map((buns) => (
               <IngredientContent data={buns} key={buns?._id} />
             ))}
           </div>
@@ -32,7 +31,7 @@ export const BurgerIngredients = (props: any) => {
             Соусы
           </h3>
           <div className={`mt-6 ${styles.itemcontent}`}>
-            {sauceData.map((sauce: any) => (
+            {sauceData.map((sauce) => (
               <IngredientContent data={sauce} key={sauce?._id} />
             ))}
           </div>
@@ -43,7 +42,7 @@ export const BurgerIngredients = (props: any) => {
             Начинки
           </h3>
           <div className={`mt-6 ${styles.itemcontent}`}>
-            {flavoursData.map((flavour: any) => (
+            {flavoursData.map((flavour) => (
               <IngredientContent data={flavour} key={flavour?._id} />
             ))}
           </div>

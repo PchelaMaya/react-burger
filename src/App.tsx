@@ -3,7 +3,7 @@ import { Header } from "./components/AppHeaders/Header";
 import { BurgersContent } from "./components/BurgersContent/BurgersContent";
 
 function App() {
-  const [BurgerIngredients, setBurgerIngredients] = useState();
+  const [burgerIngredients, setBurgerIngredients] = useState(null);
   const ingredinetsUrl = "https://norma.nomoreparties.space/api/ingredients";
 
   useEffect(() => {
@@ -26,10 +26,10 @@ function App() {
 
   return (
     <>
-      {BurgerIngredients && (
+      {burgerIngredients && (
         <div>
           <Header />
-          <BurgersContent BurgerIngredientsData={BurgerIngredients} />
+          <BurgersContent burgerIngredientsData={burgerIngredients} />
         </div>
       )}
     </>
