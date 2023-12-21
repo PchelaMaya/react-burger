@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Header } from "./components/AppHeaders/Header";
-import { BurgersContent } from "./components/BurgersContent/BurgersContent";
+import { Header } from "../AppHeaders/Header";
+import { BurgersContent } from "../BurgersContent/BurgersContent";
 
 function App() {
   const [burgerIngredients, setBurgerIngredients] = useState(null);
