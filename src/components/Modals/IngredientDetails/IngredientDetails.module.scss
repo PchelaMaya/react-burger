@@ -1,0 +1,19 @@
+.ingredientinfo {
+  padding: 40px 40px 60px 40px;
+
+  .infocontent {
+    text-align: center;
+
+    .infodescription {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+
+      .title {
+        margin: 0;
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
