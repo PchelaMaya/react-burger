@@ -5,6 +5,7 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 import { IngredientDetails } from "../../../Modals/IngredientDetails/IngredientDetails";
 import { useModal } from "../../../../hooks/useModal";
 import { Modal } from "../../../Modals/Modal/Modal";
@@ -68,4 +69,13 @@ export const IngredientContent = ({
       )}
     </>
   );
+};
+
+IngredientContent.propTypes = {
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  count: PropTypes.number,
+  ingredientClick: PropTypes.func.isRequired,
+  ingredient: PropTypes.object.isRequired,
 };

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 import { UPDATE_SORT_INGREDIENTS } from "../../../../services/actions/BurgerConstructor";
 import styles from "./ConstructorContent.module.scss";
 
@@ -58,4 +59,9 @@ export const ConstructorContent = ({ children, index }) => {
       {children}
     </div>
   );
+};
+
+ConstructorContent.propTypes = {
+  children: PropTypes.element.isRequired,
+  index: PropTypes.number.isRequired,
 };

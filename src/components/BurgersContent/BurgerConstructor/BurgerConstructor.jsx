@@ -17,7 +17,7 @@ import { Modal } from "../../Modals/Modal/Modal";
 import styles from "./BurgerConstructor.module.scss";
 import { useModal } from "../../../hooks/useModal";
 import { OrderDetails } from "../../Modals/OrderDetails/OrderDetails";
-import { requestApi } from "../../../utils/types";
+import { requestApi } from "../../../utils/request";
 import { getOrder } from "../../../services/actions/Order";
 import {
   getBurgerConstructorIngredients,
