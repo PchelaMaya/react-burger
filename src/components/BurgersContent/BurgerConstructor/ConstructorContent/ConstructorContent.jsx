@@ -1,81 +1,67 @@
-import {
-  ConstructorElement,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useRef } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+import { UPDATE_SORT_INGREDIENTS } from "../../../../services/actions/BurgerConstructor";
 import styles from "./ConstructorContent.module.scss";
 
-const ingredientsData = [
-  {
-    id: 1,
-    name: "Соус традиционный галактический",
-    price: 30,
-    thumbnail: "https://code.s3.yandex.net/react/code/sauce-03.png",
-  },
-  {
-    id: 2,
-    name: "Мясо бессмертных моллюсков Protostomia",
-    price: 300,
-    thumbnail: "https://code.s3.yandex.net/react/code/meat-02.png",
-  },
-  {
-    id: 3,
-    name: "Плоды Фалленианского дерева",
-    price: 80,
-    thumbnail: "https://code.s3.yandex.net/react/code/sp_1.png",
-  },
-  {
-    id: 4,
-    name: "Хрустящие минеральные кольца",
-    price: 80,
-    thumbnail: "https://code.s3.yandex.net/react/code/mineral_rings.png",
-  },
-  {
-    id: 5,
-    name: "Соус традиционный галактический",
-    price: 30,
-    thumbnail: "https://code.s3.yandex.net/react/code/sauce-03.png",
-  },
-  {
-    id: 6,
-    name: "Мясо бессмертных моллюсков Protostomia",
-    price: 300,
-    thumbnail: "https://code.s3.yandex.net/react/code/meat-02.png",
-  },
-  {
-    id: 7,
-    name: "Плоды Фалленианского дерева",
-    price: 80,
-    thumbnail: "https://code.s3.yandex.net/react/code/sp_1.png",
-  },
-  {
-    id: 8,
-    name: "Хрустящие минеральные кольца",
-    price: 80,
-    thumbnail: "https://code.s3.yandex.net/react/code/mineral_rings.png",
-  },
-];
+export const ConstructorContent = ({ children, index }) => {
+  const dispatch = useDispatch();
+  const ref = useRef(null);
 
-export const ConstructorContent = () => {
+  const [{ isHover }, dropRef] = useDrop({
+    accept: "ingridient",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(item) {
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      dispatch({
+        type: UPDATE_SORT_INGREDIENTS,
+        dragIndex: Number(dragIndex),
+        hoverIndex: Number(hoverIndex),
+      });
+      item.index = index;
+    },
+  });
+
+  const [{ isDragging }, dragRef] = useDrag({
+    type: "ingridient",
+    item: () => {
+      return { index };
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+  const classNameIsDragging = "mt-10";
+  if (isDragging) {
+    children = "";
+  }
+
+  const classNameIsHoverOnDropElement = styles.isActive;
+
+  dragRef(dropRef(ref));
+
   return (
-    <div className={`mt-4 mb-4 custom-scroll ${styles.constructorcontent}`}>
-      {ingredientsData.map((ingredient) => (
-        <div key={ingredient.id} className={styles.item}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={ingredient.name}
-            price={ingredient.price}
-            thumbnail={ingredient.thumbnail}
-          />
-        </div>
-      ))}
-      <div key={ingredientsData[3].id} className={styles.item}>
-        <DragIcon type="primary" />
-        <ConstructorElement
-          text={ingredientsData[3].name}
-          price={ingredientsData[3].price}
-          thumbnail={ingredientsData[3].thumbnail}
-        />
-      </div>
+    <div
+      className={`m-0 p-0 ${isDragging && classNameIsDragging} ${
+        isHover && classNameIsHoverOnDropElement
+      }`}
+      ref={ref}
+    >
+      {children}
     </div>
   );
+};
+
+ConstructorContent.propTypes = {
+  children: PropTypes.element.isRequired,
+  index: PropTypes.number.isRequired,
 };
