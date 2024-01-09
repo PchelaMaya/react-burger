@@ -7,6 +7,44 @@
   height: 760px;
   flex-direction: column;
 
+  .backgroundopacity {
+    border-radius: 27px;
+    border: 2mm ridge rgba(84, 220, 50, 0.6);
+  }
+
+  .constructorcontent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 600px;
+    width: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 568px;
+      width: 100%;
+      gap: 8px;
+    }
+  }
+  .constructorfirst {
+    padding: 16px 24px;
+    display: inline-block;
+    border-radius: var(--common-border-radius-s);
+    background: var(--background-element);
+    max-width: 536px;
+    width: 100%;
+    min-height: 80px;
+    font-family: "Jet Brains Mono";
+    font-size: 16px;
+    line-height: 24px;
+    color: #f2f2f3;
+    flex-grow: 1;
+    box-sizing: border-box;
+  }
   .offer {
     display: flex;
     align-items: center;

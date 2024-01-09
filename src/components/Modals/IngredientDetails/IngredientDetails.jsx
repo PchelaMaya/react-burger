@@ -1,16 +1,19 @@
-import { ingredientPropType } from "../../../utils/types";
-import { Modal } from "../Modal/Modal";
+import { useSelector } from "react-redux";
 import styles from "./IngredientDetails.module.scss";
-import PropTypes from "prop-types";
+import { getSelectedIngredient } from "../../../services/reducers";
 
-export const IngredientDetails = (props) => {
+export const IngredientDetails = () => {
+  const selectedIngredient = useSelector(getSelectedIngredient);
+
   return (
     <div className={styles.ingredientinfo}>
       <h3 className="text text_type_main-large">Детали ингридиента</h3>
-      <img src={props.data?.image_large} alt={props.data.name} />
+      <img src={selectedIngredient.image_large} alt={selectedIngredient.name} />
 
       <div className={styles.infocontent}>
-        <p className="text text_type_main-medium mt-2">{props.data?.name}</p>
+        <p className="text text_type_main-medium mt-2">
+          {selectedIngredient.name}
+        </p>
         <div className={`mt-8 ${styles.infodescription}`}>
           <div className={styles.descriptionbox}>
             <p
@@ -21,7 +24,7 @@ export const IngredientDetails = (props) => {
             <p
               className={`${styles.digits} text text_type_digits-default text_color_inactive`}
             >
-              {props.data?.calories}
+              {selectedIngredient.calories}
             </p>
           </div>
           <div className={styles.descriptionbox}>
@@ -33,7 +36,7 @@ export const IngredientDetails = (props) => {
             <p
               className={`${styles.digits} text text_type_digits-default text_color_inactive`}
             >
-              {props.data?.proteins}
+              {selectedIngredient.proteins}
             </p>
           </div>
           <div className={styles.descriptionbox}>
@@ -45,7 +48,7 @@ export const IngredientDetails = (props) => {
             <p
               className={`${styles.digits} text text_type_digits-default text_color_inactive`}
             >
-              {props.data?.fat}
+              {selectedIngredient.fat}
             </p>
           </div>
           <div className={styles.descriptionbox}>
@@ -57,15 +60,11 @@ export const IngredientDetails = (props) => {
             <p
               className={`${styles.digits} text text_type_digits-default text_color_inactive`}
             >
-              {props.data?.carbohydrates}
+              {selectedIngredient.carbohydrates}
             </p>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-IngredientDetails.propTypes = {
-  data: ingredientPropType.isRequired,
 };

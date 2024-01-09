@@ -1,6 +1,5 @@
-import styles from "./ModalOverlay.module.scss";
-import PropTypes from "prop-types";
 import { useEffect } from "react";
+import styles from "./ModalOverlay.module.scss";
 
 const ModalOverlay = (props) => {
   useEffect(() => {
@@ -20,10 +19,6 @@ const ModalOverlay = (props) => {
   return (
     <div className={styles.overlay} onClick={() => props.onClose(false)} />
   );
-};
-
-ModalOverlay.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };
 
 export default ModalOverlay;

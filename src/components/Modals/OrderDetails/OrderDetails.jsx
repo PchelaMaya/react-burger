@@ -1,13 +1,15 @@
-import { Modal } from "../Modal/Modal";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import styles from "./OrderDetails.module.scss";
 import { SuccessOrder } from "../../../images/successOrder";
+import { getNumberOrder } from "../../../services/reducers";
 
 export const OrderDetails = () => {
+  const numberOrder = useSelector(getNumberOrder);
+
   return (
     <div className={styles.modalorder}>
       <h3 className={`text text_type_digits-large mt-10 mb-8 ${styles.number}`}>
-        034536
+        {numberOrder}
       </h3>
       <p className="text text_type_main-medium mb-15 mt-8">
         идентификатор заказа
