@@ -146,6 +146,7 @@ export const BurgerConstructor = () => {
             size="large"
             extraClass={classButton}
             onClick={clickOrderButton}
+            disabled={!ingredientBun}
           >
             Оформить заказ
           </Button>
