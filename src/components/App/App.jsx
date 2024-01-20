@@ -1,37 +1,17 @@
-import { useEffect, useState } from "react";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 import { Header } from "../AppHeaders/Header";
 import { BurgersContent } from "../BurgersContent/BurgersContent";
 
 function App() {
-  const [burgerIngredients, setBurgerIngredients] = useState(null);
-  const ingredinetsUrl = "https://norma.nomoreparties.space/api/ingredients";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(ingredinetsUrl);
-        if (!response.ok) {
-          throw new Error(`Ошибка загрузки ингредиентов: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setBurgerIngredients(data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <>
-      {burgerIngredients && (
-        <div>
-          <Header />
-          <BurgersContent burgerIngredientsData={burgerIngredients} />
-        </div>
-      )}
+      <div>
+        <Header />
+        <DndProvider backend={HTML5Backend}>
+          <BurgersContent />
+        </DndProvider>
+      </div>
     </>
   );
 }

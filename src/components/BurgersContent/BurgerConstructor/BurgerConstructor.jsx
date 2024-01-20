@@ -1,49 +1,156 @@
+import { useEffect, useState } from "react";
+import { useDrop } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   ConstructorElement,
   CurrencyIcon,
+  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  addIngredient,
+  deleteIngredient,
+  updateTotalPrice,
+} from "../../../services/actions/BurgerConstructor";
 import { ConstructorContent } from "./ConstructorContent/ConstructorContent";
 import { Modal } from "../../Modals/Modal/Modal";
 import styles from "./BurgerConstructor.module.scss";
 import { useModal } from "../../../hooks/useModal";
 import { OrderDetails } from "../../Modals/OrderDetails/OrderDetails";
+import { requestApi } from "../../../utils/request";
+import { getOrder } from "../../../services/actions/Order";
+import {
+  getBurgerConstructorIngredients,
+  getTotalPice,
+} from "../../../services/reducers";
 
 export const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const cratorBun = "https://code.s3.yandex.net/react/code/bun-02.png";
+  const [ingredientBun, setIngredientBun] = useState(null);
+  const dispatch = useDispatch();
+  const totalPrice = useSelector(getTotalPice);
+
+  const ingredientsConstructor = useSelector(getBurgerConstructorIngredients);
+
+  const classButton =
+    ingredientsConstructor.length < 1 ? styles.buttonDisabled : "";
+
+  useEffect(() => {
+    ingredientsConstructor.map((item) => {
+      if (item.type === "bun") {
+        setIngredientBun(item);
+      }
+    });
+  }, [ingredientsConstructor]);
+
+  const clickOrderButton = () => {
+    openModal();
+    const ingredientsOrderId = [...ingredientsConstructor].map((item) => {
+      return item._id;
+    });
+    const ingredientsObj = {
+      ingredients: ingredientsOrderId,
+    };
+    dispatch(getOrder(requestApi, ingredientsObj));
+  };
+
+  function onDeleteIngredient(uniqId) {
+    dispatch(deleteIngredient(uniqId));
+    dispatch(updateTotalPrice());
+  }
+
+  const [{ isHover }, drop] = useDrop({
+    accept: "ingredient",
+    drop(ingredient) {
+      if (ingredient.type === "bun") {
+        ingredientsConstructor.some((item) => {
+          if (item.type === "bun") {
+            dispatch(deleteIngredient(item.uniqId));
+          }
+        });
+      }
+      dispatch(addIngredient(ingredient));
+      dispatch(updateTotalPrice());
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
+  const backgroundopacity = isHover ? styles.backgroundopacity : "";
 
   return (
     <section className={`mt-25 ${styles.burgerconstructor}`}>
-      <ConstructorElement
-        type="top"
-        text="Краторная булка N-200i (верх)"
-        price={200}
-        thumbnail={cratorBun}
-        isLocked={true}
-      />
-      <ConstructorContent />
-      <ConstructorElement
-        type="bottom"
-        text="Краторная булка N-200i (низ)"
-        price={200}
-        thumbnail={cratorBun}
-        isLocked={true}
-      />
+      <div className={backgroundopacity} ref={drop}>
+        {ingredientsConstructor.length > 0 ? (
+          <div className={styles.constructorcontent}>
+            {ingredientBun && (
+              <div className={styles.item}>
+                <ConstructorElement
+                  type="top"
+                  text={`${ingredientBun?.name} (верх)`}
+                  price={ingredientBun?.price}
+                  thumbnail={ingredientBun.image}
+                  isLocked={true}
+                />
+              </div>
+            )}
 
-      <div className={`mt-10 ${styles.offer}`}>
-        <p className={`${styles.price} text text_type_digits-medium`}>
-          610 <CurrencyIcon type="primary" />
-        </p>
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="large"
-          onClick={openModal}
-        >
-          Оформить заказ
-        </Button>
+            <div className={styles.constructorcontent}>
+              {ingredientsConstructor.map((item, index) => {
+                if (item.type === "main" || item.type === "sauce") {
+                  return (
+                    <ConstructorContent index={index} key={item.uniqId}>
+                      <div className={styles.item}>
+                        <DragIcon type="primary" />
+                        <ConstructorElement
+                          key={item.uniqId}
+                          text={item.name}
+                          price={item.price}
+                          thumbnail={item.image}
+                          handleClose={() => onDeleteIngredient(item.uniqId)}
+                        />
+                      </div>
+                    </ConstructorContent>
+                  );
+                }
+              })}
+            </div>
+
+            {ingredientBun && (
+              <ConstructorElement
+                key={ingredientBun.uniqId}
+                type="bottom"
+                isLocked={true}
+                text={`${ingredientBun.name} (низ)`}
+                price={ingredientBun.price}
+                thumbnail={ingredientBun.image}
+              />
+            )}
+          </div>
+        ) : (
+          <div className={styles.constructorfirst}>
+            <p className="text">
+              Перетащите ингредиенты и булки для составления бургера
+            </p>
+          </div>
+        )}
+        <div className={`mt-10 ${styles.offer}`}>
+          <p className={`text text_type_digits-medium ${styles.price}`}>
+            {totalPrice} <CurrencyIcon type="primary" />
+          </p>
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            extraClass={classButton}
+            onClick={clickOrderButton}
+            disabled={!ingredientBun}
+          >
+            Оформить заказ
+          </Button>
+        </div>
       </div>
 
       {isModalOpen && (

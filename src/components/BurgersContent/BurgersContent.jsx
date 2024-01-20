@@ -1,17 +1,21 @@
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { BurgerConstructor } from "./BurgerConstructor/BurgerConstructor";
 import { BurgerIngredients } from "./BurgerIngredients/BurgerIngredients";
-import { ingredientPropType } from "../../utils/types";
-import PropTypes from "prop-types";
+import { requestApi } from "../../utils/request";
 import styles from "./BurgersContent.module.scss";
+import { getIngredients } from "../../services/actions/Ingredients";
 
-export const BurgersContent = (props) => {
+export const BurgersContent = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getIngredients(requestApi));
+  }, [dispatch]);
+
   return (
     <section className={styles.burgerscontent}>
-      <BurgerIngredients data={props.burgerIngredientsData} />
+      <BurgerIngredients />
       <BurgerConstructor />
     </section>
   );
-};
-BurgersContent.propTypes = {
-  burgerIngredientsData: PropTypes.arrayOf(ingredientPropType).isRequired,
 };
