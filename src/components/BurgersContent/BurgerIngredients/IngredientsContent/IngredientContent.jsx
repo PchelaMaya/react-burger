@@ -11,6 +11,8 @@ import { useModal } from "../../../../hooks/useModal";
 import { Modal } from "../../../Modals/Modal/Modal";
 import { getBurgerConstructorIngredients } from "../../../../services/reducers";
 import styles from "./IngredientContent.module.scss";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
 export const IngredientContent = ({
   image,
@@ -20,6 +22,7 @@ export const IngredientContent = ({
   ingredient,
 }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
+  const location = useLocation();
 
   function handleIngredient() {
     ingredientClick(ingredient);
@@ -48,7 +51,9 @@ export const IngredientContent = ({
 
   return (
     <>
-      <div
+      <Link
+        to={`/ingredient/${ingredient._id}`}
+        state={{ background: location }}
         className={styles.ingredientitem}
         onClick={handleIngredient}
         ref={dragRef}
@@ -61,7 +66,7 @@ export const IngredientContent = ({
           {price} <CurrencyIcon type="primary" />
         </p>
         <p className="text text_type_main-default">{name}</p>
-      </div>
+      </Link>
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <IngredientDetails />

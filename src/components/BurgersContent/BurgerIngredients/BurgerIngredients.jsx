@@ -26,7 +26,9 @@ export const BurgerIngredients = () => {
     containerRef.current.addEventListener("scroll", handleScroll);
 
     return () => {
-      containerRef.current.removeEventListener("scroll", handleScroll);
+      if (containerRef.current) {
+        containerRef.current.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
 

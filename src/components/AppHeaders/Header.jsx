@@ -1,3 +1,4 @@
+import { NavLink, useLocation } from "react-router-dom";
 import styles from "./Header.module.scss";
 import {
   BurgerIcon,
@@ -5,34 +6,78 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useEffect, useState } from "react";
 
 export const Header = () => {
+  const [pathname, setPathname] = useState("");
+
+  const location = useLocation();
+  useEffect(() => {
+    setPathname(location.pathname);
+  }, [location]);
+
   return (
     <header className="pb-4 pt-4">
       <nav className={styles.nav}>
         <div className={`mr-30 ${styles.navigation}`}>
-          <div
+          <NavLink
+            to="/"
             className={`pt-4 pb-4 pl-5 pr-5 ${styles.content} text text_type_main-default`}
           >
-            <BurgerIcon type="primary" />
-            <p className="text text_type_main-default">Конструктор</p>
-          </div>
-          <div
+            <BurgerIcon
+              type={`${pathname === "/" ? "primary" : "secondary"}`}
+            />
+            <p
+              className={`${
+                pathname === "/"
+                  ? "text text_type_main-default"
+                  : "text_color_inactive"
+              }`}
+            >
+              Конструктор
+            </p>
+          </NavLink>
+
+          <NavLink
+            to="/orders"
             className={`pt-4 pb-4 pl-5 pr-5 ${styles.content} text text_type_main-default`}
           >
-            <ListIcon type="secondary" />
-            <p className="text text_type_main-default">Лента заказов</p>
-          </div>
+            <ListIcon
+              type={`${pathname === "/orders" ? "primary" : "secondary"}`}
+            />
+            <p
+              className={`${
+                pathname === "/orders"
+                  ? "text text_type_main-default"
+                  : "text_color_inactive"
+              }`}
+            >
+              Лента заказов
+            </p>
+          </NavLink>
         </div>
-        <div className={styles.logo}>
+
+        <NavLink to="/" className={styles.logo}>
           <Logo />
-        </div>
-        <div
+        </NavLink>
+
+        <NavLink
+          to="/profile"
           className={`pt-4 pb-4 pl-5 pr-5 ${styles.content} text text_type_main-default`}
         >
-          <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default">Личный кабинет</p>
-        </div>
+          <ProfileIcon
+            type={`${pathname === "/profile" ? "primary" : "secondary"}`}
+          />
+          <p
+            className={`${
+              pathname === "/profile"
+                ? "text text_type_main-default"
+                : "text_color_inactive"
+            }`}
+          >
+            Личный кабинет
+          </p>
+        </NavLink>
       </nav>
     </header>
   );

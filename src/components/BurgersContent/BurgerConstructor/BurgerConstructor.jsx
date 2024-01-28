@@ -21,16 +21,19 @@ import { requestApi } from "../../../utils/request";
 import { getOrder } from "../../../services/actions/Order";
 import {
   getBurgerConstructorIngredients,
+  getIsLoggedIn,
   getTotalPice,
 } from "../../../services/reducers";
+import { useNavigate } from "react-router";
 
 export const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const [ingredientBun, setIngredientBun] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const totalPrice = useSelector(getTotalPice);
-
+  const isLoggedIn = useSelector(getIsLoggedIn);
   const ingredientsConstructor = useSelector(getBurgerConstructorIngredients);
 
   const classButton =
@@ -46,13 +49,17 @@ export const BurgerConstructor = () => {
 
   const clickOrderButton = () => {
     openModal();
-    const ingredientsOrderId = [...ingredientsConstructor].map((item) => {
-      return item._id;
-    });
-    const ingredientsObj = {
-      ingredients: ingredientsOrderId,
-    };
-    dispatch(getOrder(requestApi, ingredientsObj));
+    if (isLoggedIn) {
+      const ingredientsOrderId = [...ingredientsConstructor].map((item) => {
+        return item._id;
+      });
+      const ingredientsObj = {
+        ingredients: ingredientsOrderId,
+      };
+      dispatch(getOrder(requestApi, ingredientsObj));
+    } else {
+      navigate("/login");
+    }
   };
 
   function onDeleteIngredient(uniqId) {
