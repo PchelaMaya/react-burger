@@ -1,4 +1,5 @@
 import { requestApi } from "../../utils/request";
+import { getUserRequest } from "../../utils/userRequest";
 
 export const GET_USER_REQUEST = "GET_USER_REQUEST";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
@@ -33,7 +34,7 @@ export const loginUser =
   };
 
 export const registerUser =
-  ({ name, email, password }) =>
+  ({ name, email, password }, navigate) =>
   (dispatch) => {
     dispatch({ type: GET_USER_REQUEST });
     console.log(name, email, password);
@@ -49,6 +50,7 @@ export const registerUser =
           });
           localStorage.setItem("refreshToken", res.refreshToken);
           localStorage.setItem("accessToken", res.accessToken);
+          navigate("/", { replace: true });
         }
       })
       .catch((err) => {
@@ -71,10 +73,11 @@ export const logoutUser = () => (dispatch) => {
     });
 };
 
-export const updateUser = (data, accessToken) => (dispatch) => {
+export const updateUser = (data) => (dispatch) => {
+  const accessToken = localStorage.getItem("accessToken");
   dispatch({ type: GET_USER_REQUEST });
   requestApi
-    .updateUser(data.name, data.email)
+    .updateUser(data, accessToken)
     .then((res) => {
       if (res && res.success) {
         dispatch({
@@ -101,12 +104,7 @@ const updateToken = () => (dispatch) => {
       }
     })
     .then(() => {
-      requestApi.getUser(
-        dispatch,
-        requestApi,
-        GET_USER_REQUEST,
-        GET_USER_SUCCESS
-      );
+      getUserRequest(dispatch, requestApi, GET_USER_REQUEST, GET_USER_SUCCESS);
     })
     .catch((err) => {
       console.log(err);
@@ -114,7 +112,13 @@ const updateToken = () => (dispatch) => {
 };
 
 export const getUser = () => (dispatch) => {
-  requestApi.getUser(dispatch, GET_USER_REQUEST, GET_USER_SUCCESS, updateToken);
+  getUserRequest(
+    dispatch,
+    requestApi,
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    updateToken
+  );
 };
 
 export const forgotPassword = (email, func) => {

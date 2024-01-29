@@ -6,28 +6,13 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { IngredientDetails } from "../../../Modals/IngredientDetails/IngredientDetails";
-import { useModal } from "../../../../hooks/useModal";
-import { Modal } from "../../../Modals/Modal/Modal";
 import { getBurgerConstructorIngredients } from "../../../../services/reducers";
 import styles from "./IngredientContent.module.scss";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 
-export const IngredientContent = ({
-  image,
-  price,
-  name,
-  ingredientClick,
-  ingredient,
-}) => {
-  const { isModalOpen, openModal, closeModal } = useModal();
+export const IngredientContent = ({ image, price, name, ingredient }) => {
   const location = useLocation();
-
-  function handleIngredient() {
-    ingredientClick(ingredient);
-    openModal();
-  }
 
   const constructorIngredients = useSelector(getBurgerConstructorIngredients);
 
@@ -55,7 +40,6 @@ export const IngredientContent = ({
         to={`/ingredient/${ingredient._id}`}
         state={{ background: location }}
         className={styles.ingredientitem}
-        onClick={handleIngredient}
         ref={dragRef}
       >
         <div className={styles.image}>
@@ -67,11 +51,6 @@ export const IngredientContent = ({
         </p>
         <p className="text text_type_main-default">{name}</p>
       </Link>
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </>
   );
 };

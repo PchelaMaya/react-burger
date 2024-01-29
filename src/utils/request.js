@@ -12,26 +12,44 @@ class RequestApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  async _fetchWithRefresh(url, options) {
+    try {
+      const res = await fetch(url, options);
+      return await this._checkStatus(res);
+    } catch (err) {
+      if (err.message === "jwt expired") {
+        const refreshData = await this.refreshToken();
+        localStorage.setItem("refreshToken", refreshData.refreshToken);
+        localStorage.setItem("accessToken", refreshData.accessToken);
+        options.headers.Authorization = `Bearer ${refreshData.accessToken}`;
+        const res = await fetch(url, options);
+        return await this._checkStatus(res);
+      } else {
+        throw err;
+      }
+    }
+  }
+
   getIngredients() {
-    return fetch(this._baseUrl + "/ingredients", {
+    return this._fetchWithRefresh(this._baseUrl + "/ingredients", {
       method: "GET",
       headers: this._headers,
-    }).then(this._checkStatus);
+    });
   }
 
   addOrder(ingredientsObj) {
-    return fetch(this._baseUrl + "/orders", {
+    return this._fetchWithRefresh(this._baseUrl + "/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify(ingredientsObj),
-    }).then(this._checkStatus);
+    });
   }
 
   createUser(name, email, password) {
-    return fetch(this._baseUrl + "/auth/register", {
+    return this._fetchWithRefresh(this._baseUrl + "/auth/register", {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
@@ -39,76 +57,56 @@ class RequestApi {
         email: email,
         password: password,
       }),
-    }).then(this._checkStatus);
+    });
   }
 
   loginUser(email, password) {
-    return fetch(this._baseUrl + "/auth/login", {
+    return this._fetchWithRefresh(this._baseUrl + "/auth/login", {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
         email: email,
         password: password,
       }),
-    }).then(this._checkStatus);
+    });
   }
 
   updateToken() {
-    return fetch(this._baseUrl + "/auth/token", {
+    return this._fetchWithRefresh(this._baseUrl + "/auth/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify({
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        token: localStorage.getItem("refreshToken"),
       }),
-    }).then(this._checkStatus);
+    });
   }
 
   logoutUser() {
-    return fetch(this._baseUrl + "/auth/logout", {
+    return this._fetchWithRefresh(this._baseUrl + "/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        token: localStorage.getItem("refreshToken"),
       }),
-    }).then(this._checkStatus);
+    });
   }
 
-  getUser(dispatch, GET_USER_REQUEST, GET_USER_SUCCESS, errFunc) {
-    dispatch({ type: GET_USER_REQUEST });
-
-    return fetch(this._baseUrl + "/auth/user", {
+  getUser() {
+    return this._fetchWithRefresh(this._baseUrl + "/auth/user", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-    })
-      .then(this._checkStatus)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch({
-            type: GET_USER_SUCCESS,
-            payload: {
-              user: res.user,
-            },
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (errFunc && localStorage.getItem("refreshToken")) {
-          dispatch(errFunc());
-        }
-      });
+    });
   }
 
   updateUser(name, email) {
-    return fetch(this._baseUrl + "/auth/user", {
+    return this._fetchWithRefresh(this._baseUrl + "/auth/user", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -118,27 +116,27 @@ class RequestApi {
         name: name,
         email: email,
       }),
-    }).then(this._checkStatus);
+    });
   }
   forgotPassword(email) {
-    return fetch(this._baseUrl + "/password-reset", {
+    return this._fetchWithRefresh(this._baseUrl + "/password-reset", {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
         email: email,
       }),
-    }).then(this._checkStatus);
+    });
   }
 
   resetPassword(password, token) {
-    return fetch(this._baseUrl + "/password-reset/reset", {
+    return this._fetchWithRefresh(this._baseUrl + "/password-reset/reset", {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
         password: password,
         token: token,
       }),
-    }).then(this._checkStatus);
+    });
   }
 }
 

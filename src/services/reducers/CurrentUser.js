@@ -2,12 +2,6 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILED,
-  POST_USER_REQUEST,
-  POST_USER_SUCCESS,
-  POST_USER_FAILED,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAILED,
   DELETE_USER,
 } from "../actions/CurrentUser";
 
@@ -28,9 +22,13 @@ const currentUserReducer = (state = initialState, action) => {
       return { ...state, isLoading: true };
     }
     case GET_USER_SUCCESS: {
+      const user = action.payload
+        ? action.payload.user
+        : { name: "", email: "" };
+
       return {
         ...state,
-        currentUser: action.payload.user,
+        currentUser: user,
         isLoading: false,
         isLoggedIn: true,
       };

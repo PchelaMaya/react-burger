@@ -46,10 +46,22 @@ function App() {
         <Header />
         <Routes location={background || location}>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/login"
+            element={<ProtectedRoute element={Login} onlyUnAuth />}
+          />
+          <Route
+            path="/register"
+            element={<ProtectedRoute element={Register} onlyUnAuth />}
+          />
+          <Route
+            path="/reset-password"
+            element={<ProtectedRoute element={ResetPassword} onlyUnAuth />}
+          />
+          <Route
+            path="/forgot-password"
+            element={<ProtectedRoute element={ForgotPassword} onlyUnAuth />}
+          />
           <Route path="/profile" element={<ProtectedRoute element={Profile} />}>
             <Route index element={<ProtectedRoute element={ProfileForm} />} />
           </Route>

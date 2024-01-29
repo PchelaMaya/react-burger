@@ -66,11 +66,15 @@ export const Header = () => {
           className={`pt-4 pb-4 pl-5 pr-5 ${styles.content} text text_type_main-default`}
         >
           <ProfileIcon
-            type={`${pathname === "/profile" ? "primary" : "secondary"}`}
+            type={`${
+              pathname === "/profile" || pathname === "/profile/orders"
+                ? "primary"
+                : "secondary"
+            }`}
           />
           <p
             className={`${
-              pathname === "/profile"
+              pathname === "/profile" || pathname === "/profile/orders"
                 ? "text text_type_main-default"
                 : "text_color_inactive"
             }`}

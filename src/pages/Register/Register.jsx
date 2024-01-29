@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   EmailInput,
   Input,
@@ -12,6 +12,7 @@ import { registerUser } from "../../services/actions/CurrentUser";
 
 export const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { inputValues, handleChange } = useForm({
     name: "",
@@ -22,7 +23,7 @@ export const Register = () => {
   function handleSubmitSend(e) {
     e.preventDefault();
 
-    dispatch(registerUser(inputValues));
+    dispatch(registerUser(inputValues, navigate));
   }
 
   return (
