@@ -23,7 +23,10 @@ export const loginUser =
           });
           console.log(res);
           localStorage.setItem("refreshToken", res.refreshToken);
-          localStorage.setItem("accessToken", res.accessToken);
+          localStorage.setItem(
+            "accessToken",
+            res.accessToken.split("Bearer ")[1]
+          );
           navigate("/profile", { replace: true });
         }
       })
@@ -49,7 +52,10 @@ export const registerUser =
             },
           });
           localStorage.setItem("refreshToken", res.refreshToken);
-          localStorage.setItem("accessToken", res.accessToken);
+          localStorage.setItem(
+            "accessToken",
+            res.accessToken.split("Bearer ")[1]
+          );
           navigate("/", { replace: true });
         }
       })
@@ -73,11 +79,10 @@ export const logoutUser = () => (dispatch) => {
     });
 };
 
-export const updateUser = (data) => (dispatch) => {
-  const accessToken = localStorage.getItem("accessToken");
+export const updateUser = (data, accessToken) => (dispatch) => {
   dispatch({ type: GET_USER_REQUEST });
   requestApi
-    .updateUser(data, accessToken)
+    .updateUser(data.name, data.email)
     .then((res) => {
       if (res && res.success) {
         dispatch({
@@ -100,7 +105,10 @@ const updateToken = () => (dispatch) => {
     .then((res) => {
       if (res && res.success) {
         localStorage.setItem("refreshToken", res.refreshToken);
-        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem(
+          "accessToken",
+          res.accessToken.split("Bearer ")[1]
+        );
       }
     })
     .then(() => {

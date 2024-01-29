@@ -15,6 +15,13 @@ function ProtectedRoute({ element: Component, onlyUnAuth = false, ...props }) {
     );
   }
 
+  if (
+    location.pathname === "/reset-password" &&
+    !location.state?.fromForgotPassword
+  ) {
+    return <Navigate to="/" />;
+  }
+
   if (onlyUnAuth && isLoggedIn) {
     const { from } = location.state || { from: { pathname: "/" } };
     return <Navigate to={from} state={{ from: location }} />;
