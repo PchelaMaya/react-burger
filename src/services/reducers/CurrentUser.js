@@ -46,6 +46,7 @@ const currentUserReducer = (state = initialState, action) => {
         ...state,
         currentUser: { name: "", email: "" },
         isLoggedIn: false,
+        isLoading: false,
       };
     }
     default: {

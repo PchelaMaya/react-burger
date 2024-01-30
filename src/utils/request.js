@@ -105,17 +105,17 @@ class RequestApi {
     });
   }
 
-  updateUser(name, email) {
+  updateUser(name, email, password) {
     return this._fetchWithRefresh(this._baseUrl + "/auth/user", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify({
         name: name,
         email: email,
+        password: password,
       }),
     });
   }
