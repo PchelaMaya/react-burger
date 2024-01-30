@@ -17,11 +17,9 @@ function ProtectedRoute({ element: Component, onlyUnAuth = false, ...props }) {
 
   if (isLoading) {
     return (
-      <>
-        <p className="mt-15 text text_type_main-large mb-15">
-          Информация летит из космоса...
-        </p>
-      </>
+      <p className="mt-15 text text_type_main-large mb-15">
+        Информация летит из космоса...
+      </p>
     );
   }
 
