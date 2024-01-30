@@ -82,7 +82,7 @@ export const logoutUser = () => (dispatch) => {
 export const updateUser = (data, accessToken) => (dispatch) => {
   dispatch({ type: GET_USER_REQUEST });
   requestApi
-    .updateUser(data.name, data.email)
+    .updateUser(data.name, data.email, data.password)
     .then((res) => {
       if (res && res.success) {
         dispatch({
