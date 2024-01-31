@@ -1,18 +1,27 @@
 import { useSelector } from "react-redux";
 import styles from "./IngredientDetails.module.scss";
-import { getSelectedIngredient } from "../../../services/reducers";
+import { getIngredients } from "../../../services/reducers";
+import { useParams } from "react-router";
 
 export const IngredientDetails = () => {
-  const selectedIngredient = useSelector(getSelectedIngredient);
+  const ingredients = useSelector(getIngredients);
+
+  const { id } = useParams();
+
+  const selectedIngredient =
+    ingredients.find((ingredient) => ingredient._id === id) || {};
 
   return (
     <div className={styles.ingredientinfo}>
       <h3 className="text text_type_main-large">Детали ингридиента</h3>
-      <img src={selectedIngredient.image_large} alt={selectedIngredient.name} />
+      <img
+        src={selectedIngredient?.image_large}
+        alt={selectedIngredient?.name}
+      />
 
       <div className={styles.infocontent}>
         <p className="text text_type_main-medium mt-2">
-          {selectedIngredient.name}
+          {selectedIngredient?.name}
         </p>
         <div className={`mt-8 ${styles.infodescription}`}>
           <div className={styles.descriptionbox}>
@@ -24,7 +33,7 @@ export const IngredientDetails = () => {
             <p
               className={`${styles.digits} text text_type_digits-default text_color_inactive`}
             >
-              {selectedIngredient.calories}
+              {selectedIngredient?.calories}
             </p>
           </div>
           <div className={styles.descriptionbox}>
@@ -36,7 +45,7 @@ export const IngredientDetails = () => {
             <p
               className={`${styles.digits} text text_type_digits-default text_color_inactive`}
             >
-              {selectedIngredient.proteins}
+              {selectedIngredient?.proteins}
             </p>
           </div>
           <div className={styles.descriptionbox}>
@@ -48,7 +57,7 @@ export const IngredientDetails = () => {
             <p
               className={`${styles.digits} text text_type_digits-default text_color_inactive`}
             >
-              {selectedIngredient.fat}
+              {selectedIngredient?.fat}
             </p>
           </div>
           <div className={styles.descriptionbox}>
@@ -60,7 +69,7 @@ export const IngredientDetails = () => {
             <p
               className={`${styles.digits} text text_type_digits-default text_color_inactive`}
             >
-              {selectedIngredient.carbohydrates}
+              {selectedIngredient?.carbohydrates}
             </p>
           </div>
         </div>

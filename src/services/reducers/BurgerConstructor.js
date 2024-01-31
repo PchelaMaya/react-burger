@@ -23,9 +23,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     case DELETE_INGREDIENT: {
       return {
         ...state,
-        constructorIngredients: state.constructorIngredients.filter(
-          (item) => item.uniqId !== action.payload
-        ),
+        constructorIngredients: [],
       };
     }
     case ADD_TOTALPRICE: {
