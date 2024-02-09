@@ -4,10 +4,10 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Login.module.scss";
-import { useDispatch } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { Form } from "../../components/Form/Form";
 import { loginUser } from "../../services/actions/CurrentUser";
+import { useDispatch } from "../../utils/typeHooks";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const Login = () => {
     password: "",
   });
 
-  function handleSubmitSend(e) {
+  function handleSubmitSend(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     dispatch(loginUser(inputValues, navigate));
@@ -36,7 +36,6 @@ export const Login = () => {
           value={inputValues.email}
           onChange={handleChange}
           name="email"
-          type="email"
         />
         <PasswordInput
           value={inputValues.password}

@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
   EmailInput,
@@ -9,6 +8,7 @@ import styles from "./Register.module.scss";
 import { useForm } from "../../hooks/useForm";
 import { Form } from "../../components/Form/Form";
 import { registerUser } from "../../services/actions/CurrentUser";
+import { useDispatch } from "../../utils/typeHooks";
 
 export const Register = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export const Register = () => {
     password: "",
   });
 
-  function handleSubmitSend(e) {
+  function handleSubmitSend(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     dispatch(registerUser(inputValues, navigate));
@@ -45,7 +45,6 @@ export const Register = () => {
           value={inputValues.email}
           onChange={handleChange}
           name="email"
-          type="email"
         />
         <PasswordInput
           value={inputValues.password}

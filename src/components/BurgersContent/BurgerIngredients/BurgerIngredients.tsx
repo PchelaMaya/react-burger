@@ -1,62 +1,75 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import { Tabs } from "./Tabs/Tabs";
 import { IngredientContent } from "./IngredientsContent/IngredientContent";
-import { addIngredientPopup } from "../../../services/actions/IngredientDetails";
 import styles from "./BurgerIngredients.module.scss";
+import { useSelector } from "../../../utils/typeHooks";
+import { TIngredientObj } from "../../../utils/types";
+
+type TIngredientType = "bun" | "sauce" | "main";
 
 export const BurgerIngredients = () => {
   const [current, setCurrent] = useState("Булки");
-  const dispatch = useDispatch();
 
-  const openIngredientPopup = (ingredient) => {
-    dispatch(addIngredientPopup(ingredient));
-  };
+  const ingredients: Array<TIngredientObj> = useSelector(
+    (state) => state.ingredients.ingredients
+  );
 
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const containerRef = useRef(null);
-
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const bunRef = useRef<HTMLHeadingElement>(null);
+  const sauceRef = useRef<HTMLHeadingElement>(null);
+  const mainRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    handleScroll();
-    containerRef.current.addEventListener("scroll", handleScroll);
+    if (containerRef.current) {
+      handleScroll();
+      containerRef.current.addEventListener("scroll", handleScroll);
 
-    return () => {
-      if (containerRef.current) {
-        containerRef.current.removeEventListener("scroll", handleScroll);
-      }
-    };
+      return () => {
+        if (containerRef.current) {
+          containerRef.current.removeEventListener("scroll", handleScroll);
+        }
+      };
+    }
   }, []);
 
   function handleScroll() {
-    const containerTop = containerRef.current.getBoundingClientRect().top;
+    if (
+      containerRef.current &&
+      bunRef.current &&
+      sauceRef.current &&
+      mainRef.current
+    ) {
+      const containerTop = containerRef.current.getBoundingClientRect().top;
 
-    const bunDistance = Math.abs(
-      bunRef.current.getBoundingClientRect().top - containerTop
-    );
-    const mainDistance = Math.abs(
-      mainRef.current.getBoundingClientRect().top - containerTop
-    );
-    const sauceDistance = Math.abs(
-      sauceRef.current.getBoundingClientRect().top - containerTop
-    );
+      const bunDistance = Math.abs(
+        bunRef.current.getBoundingClientRect().top - containerTop
+      );
+      const mainDistance = Math.abs(
+        mainRef.current.getBoundingClientRect().top - containerTop
+      );
+      const sauceDistance = Math.abs(
+        sauceRef.current.getBoundingClientRect().top - containerTop
+      );
 
-    const closestDistance = Math.min(bunDistance, mainDistance, sauceDistance);
+      const closestDistance = Math.min(
+        bunDistance,
+        mainDistance,
+        sauceDistance
+      );
 
-    if (closestDistance === bunDistance) {
-      setCurrent("Булки");
-    } else if (closestDistance === mainDistance) {
-      setCurrent("Начинки");
-    } else if (closestDistance === sauceDistance) {
-      setCurrent("Соусы");
+      if (closestDistance === bunDistance) {
+        setCurrent("Булки");
+      } else if (closestDistance === mainDistance) {
+        setCurrent("Начинки");
+      } else if (closestDistance === sauceDistance) {
+        setCurrent("Соусы");
+      }
     }
   }
 
-  const filteredIngredientsType = (type) => {
+  const filteredIngredientsType = (type: TIngredientType) => {
     return ingredients.filter((item) => item?.type === type);
   };
 
@@ -79,7 +92,6 @@ export const BurgerIngredients = () => {
             {filteredIngredientsType("bun").map((item) => (
               <IngredientContent
                 key={item?._id}
-                ingredientClick={openIngredientPopup}
                 ingredient={item}
                 image={item.image}
                 price={item.price}
@@ -97,7 +109,6 @@ export const BurgerIngredients = () => {
             {filteredIngredientsType("sauce").map((item) => (
               <IngredientContent
                 key={item?._id}
-                ingredientClick={openIngredientPopup}
                 ingredient={item}
                 image={item.image}
                 price={item.price}
@@ -115,7 +126,6 @@ export const BurgerIngredients = () => {
             {filteredIngredientsType("main").map((item) => (
               <IngredientContent
                 key={item?._id}
-                ingredientClick={openIngredientPopup}
                 ingredient={item}
                 image={item.image}
                 price={item.price}

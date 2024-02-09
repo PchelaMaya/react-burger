@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import styles from "./Profile.module.scss";
-import { useDispatch } from "react-redux";
 import { logoutUser } from "../../services/actions/CurrentUser";
+import { useDispatch } from "../../utils/typeHooks";
 
 export const Profile = () => {
   const [pathname, setPathname] = useState("");
   const dispatch = useDispatch();
 
-  function handleClick(e) {
+  function handleClick(e: React.SyntheticEvent) {
     e.preventDefault();
 
-    const refreshToken = localStorage.getItem("refreshToken");
-    dispatch(logoutUser(refreshToken));
+    // const refreshToken = localStorage.getItem("refreshToken");
+    dispatch(logoutUser());
   }
   const location = useLocation();
   useEffect(() => {

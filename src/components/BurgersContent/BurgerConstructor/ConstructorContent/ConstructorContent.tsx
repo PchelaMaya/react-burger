@@ -1,20 +1,31 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { UPDATE_SORT_INGREDIENTS } from "../../../../services/actions/BurgerConstructor";
 import styles from "./ConstructorContent.module.scss";
+import { useDispatch } from "../../../../utils/typeHooks";
 
-export const ConstructorContent = ({ children, index }) => {
+interface IBurgerConstructorContent {
+  children?: React.ReactNode;
+  index: number;
+}
+
+interface IItemId {
+  index: number;
+}
+
+export const ConstructorContent = ({
+  index,
+  children,
+}: IBurgerConstructorContent) => {
   const dispatch = useDispatch();
   const ref = useRef(null);
 
-  const [{ isHover }, dropRef] = useDrop({
+  const [{ isHover }, dropRef] = useDrop<any, any, any>({
     accept: "ingridient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(item) {
+    drop(item: IItemId) {
       const dragIndex = item.index;
       const hoverIndex = index;
 
@@ -59,9 +70,4 @@ export const ConstructorContent = ({ children, index }) => {
       {children}
     </div>
   );
-};
-
-ConstructorContent.propTypes = {
-  children: PropTypes.element.isRequired,
-  index: PropTypes.number.isRequired,
 };

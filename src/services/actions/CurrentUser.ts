@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { requestApi } from "../../utils/request";
 import { getUserRequest } from "../../utils/userRequest";
 
@@ -7,8 +8,8 @@ export const GET_USER_FAILED = "GET_USER_FAILED";
 export const DELETE_USER = "DELETE_USER";
 
 export const loginUser =
-  ({ email, password }, navigate) =>
-  (dispatch) => {
+  ({ email, password }: any, navigate: any): AnyAc =>
+  (dispatch: any) => {
     dispatch({ type: GET_USER_REQUEST });
     requestApi
       .loginUser(email, password)
@@ -37,10 +38,9 @@ export const loginUser =
   };
 
 export const registerUser =
-  ({ name, email, password }, navigate) =>
+  ({ name, email, password }: any, navigate) =>
   (dispatch) => {
     dispatch({ type: GET_USER_REQUEST });
-    console.log(name, email, password);
     requestApi
       .createUser(name, email, password)
       .then((res) => {
@@ -79,7 +79,7 @@ export const logoutUser = () => (dispatch) => {
     });
 };
 
-export const updateUser = (data, accessToken) => (dispatch) => {
+export const updateUser = (data) => (dispatch) => {
   dispatch({ type: GET_USER_REQUEST });
   requestApi
     .updateUser(data.name, data.email, data.password)
@@ -130,31 +130,27 @@ export const getUser = () => (dispatch) => {
 };
 
 export const forgotPassword = (email, func) => {
-  return (dispatch) => {
-    requestApi
-      .forgotPassword(email)
-      .then((res) => {
-        if (res && res.success) {
-          func();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  requestApi
+    .forgotPassword(email)
+    .then((res) => {
+      if (res && res.success) {
+        func();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const resetPassword = (password, token, func) => {
-  return (dispatch) => {
-    requestApi
-      .resetPassword(password, token)
-      .then((res) => {
-        if (res && res.success) {
-          func();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  requestApi
+    .resetPassword(password, token)
+    .then((res) => {
+      if (res && res.success) {
+        func();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

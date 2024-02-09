@@ -1,9 +1,14 @@
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { getIsLoading, getIsLoggedIn } from "../../services/reducers";
-import { useMemo } from "react";
+import { ReactElement, ReactNode, useMemo } from "react";
+import { useSelector } from "../../utils/typeHooks";
 
-function ProtectedRoute({ element: Component, onlyUnAuth = false, ...props }) {
+interface IProtectedRouteProps {
+  onlyUnAuth?: boolean;
+  element: ReactElement;
+}
+
+function ProtectedRoute({ element, onlyUnAuth = false }: IProtectedRouteProps) {
   const isLoggedIn = useSelector(getIsLoggedIn);
   const isLoading = useSelector(getIsLoading);
   const location = useLocation();
@@ -23,15 +28,7 @@ function ProtectedRoute({ element: Component, onlyUnAuth = false, ...props }) {
     );
   }
 
-  if (
-    location.pathname === "/reset-password" &&
-    !location.state?.fromForgotPassword
-  ) {
-    return <Navigate to="/" />;
-  }
-
   if (onlyUnAuth && isLoggedIn) {
-    // const { from } = location.state || { from: { pathname: "/" } };
     return <Navigate to={from} state={{ from: location }} />;
   }
 
@@ -39,7 +36,7 @@ function ProtectedRoute({ element: Component, onlyUnAuth = false, ...props }) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
-  return <Component {...props} />;
+  return element;
 }
 
 export default ProtectedRoute;

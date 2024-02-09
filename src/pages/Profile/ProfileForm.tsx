@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   EmailInput,
@@ -9,6 +8,7 @@ import {
 import { useForm } from "../../hooks/useForm";
 import { getCurrentUser } from "../../services/reducers";
 import { updateUser } from "../../services/actions/CurrentUser";
+import { useDispatch, useSelector } from "../../utils/typeHooks";
 
 export const ProfileForm = () => {
   const currentUser = useSelector(getCurrentUser);
@@ -20,9 +20,13 @@ export const ProfileForm = () => {
     setInputValues({ ...currentUser, password: "" });
   }, []);
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 0);
     setDisabled(false);
   };
 
@@ -32,12 +36,12 @@ export const ProfileForm = () => {
     password: "",
   });
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     dispatch(updateUser(inputValues));
   }
 
-  function clickCancel(e) {
+  function clickCancel(e: React.SyntheticEvent) {
     e.preventDefault();
 
     setInputValues({ ...currentUser, password: "" });

@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux";
 import styles from "./OrderDetails.module.scss";
 import { SuccessOrder } from "../../../images/successOrder";
 import { getIsLoadingOrder, getNumberOrder } from "../../../services/reducers";
+import { useSelector } from "../../../utils/typeHooks";
 
 export const OrderDetails = () => {
   const numberOrder = useSelector(getNumberOrder);

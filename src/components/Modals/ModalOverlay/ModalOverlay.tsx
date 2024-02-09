@@ -1,12 +1,12 @@
 import styles from "./ModalOverlay.module.scss";
-import PropTypes from "prop-types";
 import { useEffect } from "react";
+import { TClosePopup } from "../../../utils/types";
 
-const ModalOverlay = (props) => {
+const ModalOverlay = ({ onClose }: TClosePopup) => {
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        props.onClose(false);
+        onClose();
       }
     };
 
@@ -17,13 +17,7 @@ const ModalOverlay = (props) => {
     };
   }, []);
 
-  return (
-    <div className={styles.overlay} onClick={() => props.onClose(false)} />
-  );
-};
-
-ModalOverlay.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  return <div className={styles.overlay} onClick={onClose} />;
 };
 
 export default ModalOverlay;

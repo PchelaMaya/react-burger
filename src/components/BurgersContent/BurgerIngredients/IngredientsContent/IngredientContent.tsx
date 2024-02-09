@@ -1,23 +1,35 @@
 import { useMemo } from "react";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { getBurgerConstructorIngredients } from "../../../../services/reducers";
 import styles from "./IngredientContent.module.scss";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { useSelector } from "../../../../utils/typeHooks";
+import { TIngredientObj } from "../../../../utils/types";
 
-export const IngredientContent = ({ image, price, name, ingredient }) => {
+interface IIngredientContent {
+  image: string;
+  price: number;
+  name: string;
+  ingredient: TIngredientObj;
+}
+
+export const IngredientContent = ({
+  image,
+  price,
+  name,
+  ingredient,
+}: IIngredientContent) => {
   const location = useLocation();
 
   const constructorIngredients = useSelector(getBurgerConstructorIngredients);
 
   const count = useMemo(() => {
-    const checkedIngredient = constructorIngredients.filter((item) => {
+    const checkedIngredient = constructorIngredients.filter((item: any) => {
       return item._id === ingredient._id;
     });
     if (checkedIngredient.length > 0) {
@@ -53,13 +65,4 @@ export const IngredientContent = ({ image, price, name, ingredient }) => {
       </Link>
     </>
   );
-};
-
-IngredientContent.propTypes = {
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  count: PropTypes.number,
-  ingredientClick: PropTypes.func.isRequired,
-  ingredient: PropTypes.object.isRequired,
 };

@@ -37,3 +37,6 @@ export const getIsLoading = (state) => {
 export const getIsLoadingOrder = (state) => {
   return state.order.isLoading;
 };
+export const getIsOpenResetPasswordPage = (state) => {
+  return state.resetPassword.isOpenResetPasswordPage;
+};

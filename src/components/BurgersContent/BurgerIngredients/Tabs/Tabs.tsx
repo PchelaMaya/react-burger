@@ -2,8 +2,12 @@ import { Link } from "react-scroll";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./Tabs.module.scss";
 
-export const Tabs = ({ current, setCurrent }) => {
-  const scrollSection = (sectionId) => {
+interface ITabs {
+  current: string;
+  setCurrent: (value: string) => void;
+}
+export const Tabs = ({ current, setCurrent }: ITabs) => {
+  const scrollSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
