@@ -1,16 +1,35 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import { Identifier } from "dnd-core";
 import { UPDATE_SORT_INGREDIENTS } from "../../../../services/actions/BurgerConstructor";
 import styles from "./ConstructorContent.module.scss";
 import { useDispatch } from "../../../../utils/typeHooks";
+import { TIngredientObj } from "../../../../utils/types";
 
-interface IBurgerConstructorContent {
+interface IBurgerConstructorContent extends IItemId {
   children?: React.ReactNode;
-  index: number;
 }
 
 interface IItemId {
   index: number;
+}
+
+interface IDragItem extends IItemId {
+  ingredient?: TIngredientObj;
+}
+
+interface IDropResult {
+  dragIndex: number;
+  hoverIndex: number;
+}
+
+interface ICollectDrop {
+  isHover: boolean;
+  handlerId: Identifier | null;
+}
+
+interface ICollectDrag {
+  isDragging: boolean;
 }
 
 export const ConstructorContent = ({
@@ -20,11 +39,13 @@ export const ConstructorContent = ({
   const dispatch = useDispatch();
   const ref = useRef(null);
 
-  const [{ isHover }, dropRef] = useDrop<any, any, any>({
+  const [{ isHover }, dropRef] = useDrop<IDragItem, unknown, ICollectDrop>({
     accept: "ingridient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
+      handlerId: monitor.getHandlerId(),
     }),
+
     drop(item: IItemId) {
       const dragIndex = item.index;
       const hoverIndex = index;
@@ -42,7 +63,11 @@ export const ConstructorContent = ({
     },
   });
 
-  const [{ isDragging }, dragRef] = useDrag({
+  const [{ isDragging }, dragRef] = useDrag<
+    IDragItem,
+    IDropResult,
+    ICollectDrag
+  >({
     type: "ingridient",
     item: () => {
       return { index };

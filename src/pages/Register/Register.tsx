@@ -23,7 +23,14 @@ export const Register = () => {
   function handleSubmitSend(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    dispatch(registerUser(inputValues, navigate));
+    dispatch(
+      registerUser(
+        inputValues.name,
+        inputValues.email,
+        inputValues.password,
+        navigate
+      )
+    );
   }
 
   return (

@@ -1,9 +1,22 @@
-import { TIngredientObj } from "./types";
+import {
+  TGetUser,
+  TIngredientObj,
+  TIngredients,
+  TMessageResponse,
+  TOrderAdd,
+  TUpdateToken,
+  TUserCreate,
+  TUserLogin,
+} from "./types";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
 class RequestApi {
-  private _checkStatus(res: Response) {
-    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  _checkStatus<T>(res: Response): Promise<T> {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 
   private getHeaders(): Headers {
@@ -16,7 +29,7 @@ class RequestApi {
     return headers;
   }
 
-  updateToken() {
+  updateToken(): Promise<TUpdateToken> {
     return fetch(`${BASE_URL}/auth/token`, {
       method: "POST",
       headers: {
@@ -26,7 +39,7 @@ class RequestApi {
         token: localStorage.getItem("refreshToken"),
       }),
     }).then((res) => {
-      return this._checkStatus(res);
+      return this._checkStatus<TUpdateToken>(res);
     });
   }
 
@@ -51,14 +64,16 @@ class RequestApi {
     }
   };
 
-  getIngredients() {
-    return this._fetchWithRefresh(`${BASE_URL}/ingredients`, {
+  getIngredients(): Promise<TIngredients> {
+    return fetch(`${BASE_URL}/ingredients`, {
       method: "GET",
       headers: this.getHeaders(),
+    }).then((res) => {
+      return this._checkStatus<TIngredients>(res);
     });
   }
 
-  addOrder(ingredientsObj: Array<TIngredientObj>) {
+  addOrder(ingredientsObj: Array<TIngredientObj>): Promise<TOrderAdd> {
     return this._fetchWithRefresh(`${BASE_URL}/orders`, {
       method: "POST",
       headers: {
@@ -66,11 +81,17 @@ class RequestApi {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify(ingredientsObj),
+    }).then((res: any) => {
+      return this._checkStatus<TOrderAdd>(res);
     });
   }
 
-  createUser(name: string, email: string, password: string) {
-    return this._fetchWithRefresh(`${BASE_URL}/auth/register`, {
+  createUser(
+    name: string,
+    email: string,
+    password: string
+  ): Promise<TUserCreate> {
+    return fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({
@@ -78,39 +99,47 @@ class RequestApi {
         email: email,
         password: password,
       }),
+    }).then((res) => {
+      return this._checkStatus<TUserCreate>(res);
     });
   }
 
-  loginUser(email: string, password: string) {
-    return this._fetchWithRefresh(`${BASE_URL}/auth/login`, {
+  loginUser(email: string, password: string): Promise<TUserLogin> {
+    return fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({
         email: email,
         password: password,
       }),
+    }).then((res) => {
+      return this._checkStatus<TUserLogin>(res);
     });
   }
 
-  logoutUser() {
-    return this._fetchWithRefresh(`${BASE_URL}/auth/logout`, {
+  logoutUser(): Promise<TMessageResponse> {
+    return fetch(`${BASE_URL}/auth/logout`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({
         token: localStorage.getItem("refreshToken"),
       }),
+    }).then((res) => {
+      return this._checkStatus<TMessageResponse>(res);
     });
   }
 
-  getUser() {
-    return this._fetchWithRefresh(`${BASE_URL}/auth/user`, {
+  getUser(): Promise<TGetUser> {
+    return fetch(`${BASE_URL}/auth/user`, {
       method: "GET",
       headers: this.getHeaders(),
+    }).then((res) => {
+      return this._checkStatus<TGetUser>(res);
     });
   }
 
-  updateUser(name: string, email: string, password: string) {
-    return this._fetchWithRefresh(`${BASE_URL}/auth/user`, {
+  updateUser(name: string, email: string, password: string): Promise<TGetUser> {
+    return fetch(`${BASE_URL}/auth/user`, {
       method: "PATCH",
       headers: this.getHeaders(),
       body: JSON.stringify({
@@ -118,26 +147,33 @@ class RequestApi {
         email: email,
         password: password,
       }),
+    }).then((res) => {
+      return this._checkStatus<TGetUser>(res);
     });
   }
-  forgotPassword(email: string) {
-    return this._fetchWithRefresh(`${BASE_URL}/password-reset`, {
+
+  forgotPassword(email: string): Promise<TMessageResponse> {
+    return fetch(`${BASE_URL}/password-reset`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({
         email: email,
       }),
+    }).then((res) => {
+      return this._checkStatus<TMessageResponse>(res);
     });
   }
 
-  resetPassword(password: string, token: string) {
-    return this._fetchWithRefresh(`${BASE_URL}/password-reset/reset`, {
+  resetPassword(password: string, token: string): Promise<TMessageResponse> {
+    return fetch(`${BASE_URL}/password-reset/reset`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({
         password: password,
         token: token,
       }),
+    }).then((res) => {
+      return this._checkStatus<TMessageResponse>(res);
     });
   }
 }

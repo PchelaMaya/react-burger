@@ -38,7 +38,9 @@ export const ProfileForm = () => {
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    dispatch(updateUser(inputValues));
+    dispatch(
+      updateUser(inputValues.name, inputValues.email, inputValues.password)
+    );
   }
 
   function clickCancel(e: React.SyntheticEvent) {

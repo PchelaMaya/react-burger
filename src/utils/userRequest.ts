@@ -1,21 +1,14 @@
-import { Dispatch } from "redux"; // Импортируйте тип Dispatch из redux, если вы используете его
 import { TGetUser } from "./types";
-
-interface IAction {
-  type: string;
-  payload?: any;
-}
-
-type TDispatch = Dispatch<IAction>;
+import { AppDispacth } from "./typeHooks";
 
 interface IRequestApi {
   getUser: () => Promise<TGetUser>;
 }
 
-type TErrFunc = () => IAction;
+type TErrFunc = () => (dispatch: AppDispacth) => void;
 
 export const getUserRequest = (
-  dispatch: TDispatch,
+  dispatch: AppDispacth,
   requestApi: IRequestApi,
   GET_USER_REQUEST: string,
   GET_USER_SUCCESS: string,
@@ -30,11 +23,13 @@ export const getUserRequest = (
           type: GET_USER_SUCCESS,
           payload: {
             user: res.user,
+            accessToken: localStorage.getItem("accessToken"),
+            refreshToken: localStorage.getItem("refreshToken"),
           },
         });
       }
     })
-    .catch((err: any) => {
+    .catch((err: string) => {
       console.log(err);
       if (errFunc && localStorage.getItem("refreshToken")) {
         dispatch(errFunc());

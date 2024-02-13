@@ -9,7 +9,7 @@ import styles from "./IngredientContent.module.scss";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useSelector } from "../../../../utils/typeHooks";
-import { TIngredientObj } from "../../../../utils/types";
+import { TIngredientId, TIngredientObj } from "../../../../utils/types";
 
 interface IIngredientContent {
   image: string;
@@ -29,9 +29,11 @@ export const IngredientContent = ({
   const constructorIngredients = useSelector(getBurgerConstructorIngredients);
 
   const count = useMemo(() => {
-    const checkedIngredient = constructorIngredients.filter((item: any) => {
-      return item._id === ingredient._id;
-    });
+    const checkedIngredient = constructorIngredients.filter(
+      (item: TIngredientObj) => {
+        return item._id === ingredient._id;
+      }
+    );
     if (checkedIngredient.length > 0) {
       if (ingredient.type === "bun") {
         return 2;

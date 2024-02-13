@@ -21,7 +21,7 @@ export const Login = () => {
   function handleSubmitSend(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    dispatch(loginUser(inputValues, navigate));
+    dispatch(loginUser(inputValues.email, inputValues.password, navigate));
   }
   return (
     <>
