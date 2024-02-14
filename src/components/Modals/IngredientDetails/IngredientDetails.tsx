@@ -1,16 +1,28 @@
-import { useSelector } from "react-redux";
 import styles from "./IngredientDetails.module.scss";
 import { getIngredients } from "../../../services/reducers";
 import { useParams } from "react-router";
+import { useSelector } from "../../../utils/typeHooks";
+import { TIngredientObj } from "../../../utils/types";
+import { useEffect, useState } from "react";
 
 export const IngredientDetails = () => {
-  const ingredients = useSelector(getIngredients);
+  const [selectedIngredient, setSelectedIngredient] =
+    useState<TIngredientObj | null>(null);
+
+  const ingredients: Array<TIngredientObj> = useSelector(getIngredients);
 
   const { id } = useParams();
 
-  const selectedIngredient =
-    ingredients.find((ingredient) => ingredient._id === id) || {};
-
+  useEffect(() => {
+    if (ingredients.length !== 0) {
+      const ingredient = ingredients.find((ingredient) => {
+        return ingredient._id === id;
+      });
+      if (ingredient) {
+        setSelectedIngredient(ingredient);
+      }
+    }
+  }, [ingredients]);
   return (
     <div className={styles.ingredientinfo}>
       <h3 className="text text_type_main-large">Детали ингридиента</h3>

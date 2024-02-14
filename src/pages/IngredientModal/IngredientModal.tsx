@@ -1,15 +1,11 @@
 import { IngredientDetails } from "../../components/Modals/IngredientDetails/IngredientDetails";
 import { Modal } from "../../components/Modals/Modal/Modal";
-import PropTypes from "prop-types";
+import { TClosePopup } from "../../utils/types";
 
-export const IngredientModal = ({ onClose }) => {
+export const IngredientModal = ({ onClose }: TClosePopup) => {
   return (
     <Modal onClose={onClose}>
       <IngredientDetails />
     </Modal>
   );
-};
-
-IngredientModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };

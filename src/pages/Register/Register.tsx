@@ -1,42 +1,57 @@
 import { Link, useNavigate } from "react-router-dom";
 import {
   EmailInput,
+  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./Login.module.scss";
-import { useDispatch } from "react-redux";
+import styles from "./Register.module.scss";
 import { useForm } from "../../hooks/useForm";
 import { Form } from "../../components/Form/Form";
-import { loginUser } from "../../services/actions/CurrentUser";
+import { registerUser } from "../../services/actions/CurrentUser";
+import { useDispatch } from "../../utils/typeHooks";
 
-export const Login = () => {
+export const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { inputValues, handleChange } = useForm({
+    name: "",
     email: "",
     password: "",
   });
 
-  function handleSubmitSend(e) {
+  function handleSubmitSend(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    dispatch(loginUser(inputValues, navigate));
+    dispatch(
+      registerUser(
+        inputValues.name,
+        inputValues.email,
+        inputValues.password,
+        navigate
+      )
+    );
   }
+
   return (
     <>
       <Form
-        title="Вход"
-        textButton="Войти"
-        formName="formLogin"
+        title="Регистрация"
+        textButton="Зарегистрироваться"
+        formName="formRegister"
         handleSubmitSend={handleSubmitSend}
       >
+        <Input
+          placeholder="Имя"
+          value={inputValues.name}
+          onChange={handleChange}
+          name="name"
+        />
         <EmailInput
           placeholder="E-mail"
           value={inputValues.email}
           onChange={handleChange}
           name="email"
-          type="email"
         />
         <PasswordInput
           value={inputValues.password}
@@ -45,21 +60,12 @@ export const Login = () => {
         />
       </Form>
 
-      <div className={`mt-20 mb-4 ${styles.block}`}>
+      <div className={`mt-20 ${styles.block}`}>
         <p className="text text_type_main-default text_color_inactive">
-          Вы — новый пользователь?
+          Уже зарегистрированы?
         </p>
-        <Link to="/register" className={styles.link}>
-          Зарегистрироваться
-        </Link>
-      </div>
-
-      <div className={styles.block}>
-        <p className="text text_type_main-default text_color_inactive">
-          Забыли пароль?
-        </p>
-        <Link to="/forgot-password" className={styles.link}>
-          Восстановить пароль
+        <Link to="/login" className={styles.link} type="submit">
+          Войти
         </Link>
       </div>
     </>

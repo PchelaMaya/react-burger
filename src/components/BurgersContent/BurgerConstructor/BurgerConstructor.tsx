@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   ConstructorElement,
@@ -25,16 +24,25 @@ import {
   getTotalPice,
 } from "../../../services/reducers";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "../../../utils/typeHooks";
+import { TIngredientObj } from "../../../utils/types";
+
+type TIngredientObjConstructor = TIngredientObj & {
+  readonly uniqId: string;
+};
 
 export const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const [ingredientBun, setIngredientBun] = useState(null);
+  const [ingredientBun, setIngredientBun] =
+    useState<TIngredientObjConstructor | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const totalPrice = useSelector(getTotalPice);
   const isLoggedIn = useSelector(getIsLoggedIn);
-  const ingredientsConstructor = useSelector(getBurgerConstructorIngredients);
+  const ingredientsConstructor: Array<TIngredientObjConstructor> = useSelector(
+    getBurgerConstructorIngredients
+  );
 
   const classButton =
     ingredientsConstructor.length < 1 ? styles.buttonDisabled : "";
@@ -53,23 +61,23 @@ export const BurgerConstructor = () => {
       const ingredientsOrderId = [...ingredientsConstructor].map((item) => {
         return item._id;
       });
-      const ingredientsObj = {
+      const IngredientId = {
         ingredients: ingredientsOrderId,
       };
-      dispatch(getOrder(requestApi, ingredientsObj));
+      dispatch(getOrder(requestApi, IngredientId));
     } else {
       navigate("/login");
     }
   };
 
-  function onDeleteIngredient(uniqId) {
+  function onDeleteIngredient(uniqId: string) {
     dispatch(deleteIngredient(uniqId));
     dispatch(updateTotalPrice());
   }
 
   const [{ isHover }, drop] = useDrop({
     accept: "ingredient",
-    drop(ingredient) {
+    drop(ingredient: TIngredientObjConstructor) {
       if (ingredient.type === "bun") {
         ingredientsConstructor.some((item) => {
           if (item.type === "bun") {
