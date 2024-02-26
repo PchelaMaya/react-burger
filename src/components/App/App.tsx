@@ -18,6 +18,7 @@ import { getIngredients } from "../../services/actions/Ingredients";
 import { IngredientDetails } from "../Modals/IngredientDetails/IngredientDetails";
 import { useDispatch } from "../../utils/typeHooks";
 import { requestApi } from "../../utils/request";
+import { Feed } from "../../pages/Feed/Feed";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ function App() {
             />
           </Route>
           <Route path="/ingredient/:id" element={<IngredientDetails />} />
+          <Route path="/feed" element={<Feed />} />
           {/* <Route path=".*" element={<p>Страница отдыхает в космосе.</p>} /> */}
         </Routes>
         <Routes>

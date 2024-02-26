@@ -25,10 +25,16 @@ export type TServerResponse<T> = {
   success: boolean;
 } & T;
 
-export type TUserObj = {
+export type TUserInfo = {
   email: string;
   name: string;
 };
+
+export type TPassword = {
+  password: string;
+};
+
+export type TUserObj = TUserInfo & TPassword;
 
 export type TIngredients = TServerResponse<{
   data: TIngredientObj;
@@ -66,7 +72,13 @@ export type TMessageResponse = TServerResponse<{
 }>;
 
 export type TGetUser = TServerResponse<{
-  user: TUserObj;
+  user: TUserInfo;
+}>;
+
+export type TResUser = TServerResponse<{
+  user: TUserInfo;
+  accessToken: string;
+  refreshToken: string;
 }>;
 
 export type TIngredientId = {
@@ -75,4 +87,47 @@ export type TIngredientId = {
 
 export type TIngredientObjConstructor = TIngredientObj & {
   readonly uniqId: string;
+};
+
+export type TOrder = {
+  ingredients: Array<string>;
+  _id: string;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  price: number;
+};
+
+export type TOrderRes = TServerResponse<{
+  orders: Array<TOrder>;
+}>;
+
+export type TOwner = {
+  owner: {
+    name: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
+
+export type TOrderInfo = TServerResponse<{
+  name: string;
+  order: TOrder & TOwner;
+}>;
+
+export interface IMessageResponse {
+  message: string;
+  success: boolean;
+  username: string;
+
+  id?: string;
+  isBot?: boolean;
+}
+
+export type TLoginUser = {
+  email: string;
+  password: string;
 };

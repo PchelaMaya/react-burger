@@ -1,15 +1,26 @@
+import { TIngredientObjConstructor } from "../../utils/types";
 import {
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
   ADD_TOTALPRICE,
   UPDATE_SORT_INGREDIENTS,
+  TBurgerConstructorActions,
 } from "../actions/BurgerConstructor";
-const initialState = {
+
+type TBurgerConstructorState = {
+  constructorIngredients: Array<TIngredientObjConstructor>;
+  totalPrice: number;
+};
+
+const initialState: TBurgerConstructorState = {
   constructorIngredients: [],
   totalPrice: 0,
 };
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+const burgerConstructorReducer = (
+  state = initialState,
+  action: TBurgerConstructorActions
+) => {
   switch (action.type) {
     case ADD_INGREDIENT: {
       return {
@@ -23,18 +34,20 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     case DELETE_INGREDIENT: {
       return {
         ...state,
-        constructorIngredients: [],
+        constructorIngredients: state.constructorIngredients.filter(
+          (item) => item.uniqId !== action.payload
+        ),
       };
     }
     case ADD_TOTALPRICE: {
       return {
         ...state,
         totalPrice: [...state.constructorIngredients].reduce(
-          (total, ingredient) => {
-            if (ingredient.type === "bun") {
-              return total + ingredient.price * 2;
+          (total, ingradient) => {
+            if (ingradient.type === "bun") {
+              return total + ingradient.price * 2;
             } else {
-              return (total += ingredient.price);
+              return (total += ingradient.price);
             }
           },
           0
@@ -43,9 +56,9 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     }
     case UPDATE_SORT_INGREDIENTS: {
       const newConstructorIngredients = [...state.constructorIngredients];
-      const dragIngredient = newConstructorIngredients[action.dragIndex];
+      const dragIngradient = newConstructorIngredients[action.dragIndex];
       newConstructorIngredients.splice(action.dragIndex, 1);
-      newConstructorIngredients.splice(action.hoverIndex, 0, dragIngredient);
+      newConstructorIngredients.splice(action.hoverIndex, 0, dragIngradient);
 
       return {
         ...state,
@@ -57,3 +70,5 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     }
   }
 };
+
+export default burgerConstructorReducer;

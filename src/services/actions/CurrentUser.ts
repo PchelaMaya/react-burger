@@ -154,7 +154,7 @@ export const getUser = () => (dispatch: AppDispacth) => {
   );
 };
 
-export const forgotPassword = (email: string, func: () => void) => {
+export const forgotPassword = (email: string, func: () => void) => () => {
   requestApi
     .forgotPassword(email)
     .then((res) => {
@@ -167,19 +167,51 @@ export const forgotPassword = (email: string, func: () => void) => {
     });
 };
 
-export const resetPassword = (
-  password: string,
-  token: string,
-  func: () => void
-) => {
-  requestApi
-    .resetPassword(password, token)
-    .then((res) => {
-      if (res && res.success) {
-        func();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const resetPassword =
+  (password: string, token: string, func: () => void) => () => {
+    requestApi
+      .resetPassword(password, token)
+      .then((res) => {
+        if (res && res.success) {
+          func();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+type TGetUserRequestAction = {
+  readonly type: typeof GET_USER_REQUEST;
 };
+
+type TGetUserSuccessAction = {
+  readonly type: typeof GET_USER_SUCCESS;
+  readonly payload: {
+    user: TUserObj;
+    accessToken: string | null;
+    refreshToken: string | null;
+  };
+};
+
+type TGetUserFailedAction = {
+  readonly type: typeof GET_USER_FAILED;
+};
+
+type TDeleteUserAction = {
+  readonly type: typeof DELETE_USER;
+};
+type TUPDATE_TOKEN = {
+  readonly type: typeof UPDATE_TOKEN;
+  readonly payload: {
+    accessToken: string | null;
+    refreshToken: string | null;
+  };
+};
+
+export type TCurrentUserActions =
+  | TGetUserRequestAction
+  | TGetUserSuccessAction
+  | TGetUserFailedAction
+  | TDeleteUserAction
+  | TUPDATE_TOKEN;

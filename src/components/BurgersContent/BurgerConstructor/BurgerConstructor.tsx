@@ -21,15 +21,12 @@ import { getOrder } from "../../../services/actions/Order";
 import {
   getBurgerConstructorIngredients,
   getIsLoggedIn,
-  getTotalPice,
+  getOrderLoading,
+  getTotalPrice,
 } from "../../../services/reducers";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "../../../utils/typeHooks";
-import { TIngredientObj } from "../../../utils/types";
-
-type TIngredientObjConstructor = TIngredientObj & {
-  readonly uniqId: string;
-};
+import { TIngredientObjConstructor } from "../../../utils/types";
 
 export const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -38,8 +35,9 @@ export const BurgerConstructor = () => {
     useState<TIngredientObjConstructor | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const totalPrice = useSelector(getTotalPice);
+  const totalPrice = useSelector(getTotalPrice);
   const isLoggedIn = useSelector(getIsLoggedIn);
+  const orderIsLoading = useSelector(getOrderLoading);
   const ingredientsConstructor: Array<TIngredientObjConstructor> = useSelector(
     getBurgerConstructorIngredients
   );
@@ -161,7 +159,7 @@ export const BurgerConstructor = () => {
             size="large"
             extraClass={classButton}
             onClick={clickOrderButton}
-            disabled={!ingredientBun}
+            disabled={ingredientsConstructor.length < 1 || orderIsLoading}
           >
             Оформить заказ
           </Button>

@@ -4,6 +4,7 @@ import {
   TIngredients,
   TMessageResponse,
   TOrderAdd,
+  TOrderRes,
   TUpdateToken,
   TUserCreate,
   TUserLogin,
@@ -86,6 +87,13 @@ class RequestApi {
     });
   }
 
+  getOrder(number: string): Promise<TOrderRes> {
+    return fetch(`${BASE_URL}/orders/${number}`, {
+      method: "GET",
+      headers: this.getHeaders(),
+    }).then((res) => this._checkStatus<TOrderRes>(res));
+  }
+
   createUser(
     name: string,
     email: string,
@@ -132,7 +140,10 @@ class RequestApi {
   getUser(): Promise<TGetUser> {
     return fetch(`${BASE_URL}/auth/user`, {
       method: "GET",
-      headers: this.getHeaders(),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     }).then((res) => {
       return this._checkStatus<TGetUser>(res);
     });
@@ -141,7 +152,10 @@ class RequestApi {
   updateUser(name: string, email: string, password: string): Promise<TGetUser> {
     return fetch(`${BASE_URL}/auth/user`, {
       method: "PATCH",
-      headers: this.getHeaders(),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
       body: JSON.stringify({
         name: name,
         email: email,
