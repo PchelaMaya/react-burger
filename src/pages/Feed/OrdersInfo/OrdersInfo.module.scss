@@ -1,0 +1,17 @@
+.ordersinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+
+  .ordersboard {
+    display: flex;
+    flex-direction: row;
+    gap: 36px;
+  }
+
+  .ordersstatistic {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+}

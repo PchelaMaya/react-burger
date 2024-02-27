@@ -8,6 +8,7 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useEffect, useState } from "react";
 
 type TOrderComponent = {
   number: number;
@@ -25,6 +26,20 @@ export const Order = ({
   date,
 }: TOrderComponent) => {
   const location = useLocation();
+
+  const [pathname, setPathname] = useState("");
+
+  useEffect(() => {
+    setPathname(location.pathname);
+  }, [location]);
+
+  let linkToUse;
+
+  if (pathname === "/profile/*") {
+    linkToUse = `/profile/orders/${number}`;
+  } else {
+    linkToUse = `/feed/${number}`;
+  }
 
   const allIngredients: Array<TIngredientObj> = useSelector(getIngredients);
   let orderPrice: number = 0;
@@ -47,14 +62,13 @@ export const Order = ({
 
   return (
     <Link
-      to={`/feed/${number}`}
+      to={linkToUse}
       state={{ background: location }}
       className={styles.link}
     >
       <div className={`p-6 mb-4 ${styles.order}`}>
-        434
         <div className={`${styles.data}`}>
-          <p className={`text text_type_digits-default`}>{number}</p>
+          <p className={`text text_type_digits-default`}>#{number}</p>
           <div className={`text text_type_main-default text_color_inactive`}>
             <FormattedDate date={new Date(date)} />
           </div>

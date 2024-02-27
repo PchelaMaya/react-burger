@@ -11,7 +11,6 @@ export const Profile = () => {
   function handleClick(e: React.SyntheticEvent) {
     e.preventDefault();
 
-    // const refreshToken = localStorage.getItem("refreshToken");
     dispatch(logoutUser());
   }
   const location = useLocation();
@@ -39,7 +38,7 @@ export const Profile = () => {
           История заказов
         </NavLink>
         <NavLink
-          className="text text_type_main-medium mb-20"
+          className="text text_type_main-medium text_color_inactive mb-20"
           to="/login"
           onClick={handleClick}
         >

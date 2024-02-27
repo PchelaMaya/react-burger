@@ -7,8 +7,8 @@ export const OrdersFeed = () => {
   const wsOrders = useSelector(getWSOrders);
 
   return (
-    <div className={`${styles.container}`}>
-      <div className={`pr-4 ${styles.contant}`}>
+    <div className={`${styles.ordersfeed}`}>
+      <div className={`pr-4 ${styles.ordersfeedcontent}`}>
         {wsOrders.map((item) => {
           return (
             <Order
