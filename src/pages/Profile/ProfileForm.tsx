@@ -8,11 +8,11 @@ import {
 import { useForm } from "../../hooks/useForm";
 import { getCurrentUser } from "../../services/reducers";
 import { updateUser } from "../../services/actions/CurrentUser";
-import { useDispatch, useSelector } from "../../utils/typeHooks";
+import { useAppDispatch, useSelector } from "../../utils/typeHooks";
 
 export const ProfileForm = () => {
   const currentUser = useSelector(getCurrentUser);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [disabled, setDisabled] = useState(true);
 

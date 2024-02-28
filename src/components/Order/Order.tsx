@@ -9,6 +9,7 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
+import uniqid from "uniqid";
 
 type TOrderComponent = {
   number: number;
@@ -85,21 +86,19 @@ export const Order = ({
           <div className={`pl-5 ${styles.container}`}>
             {iconIngredients.map(
               (item: TIngredientObj | undefined, index: number) => {
-                if (index < 6) {
+                if (index < 6 && item !== undefined) {
                   let last;
                   if (count !== undefined && index === 5) {
                     last = true;
                   }
-                  if (item !== undefined) {
-                    return (
-                      <IngredientItem
-                        key={item?._id}
-                        count={count}
-                        last={last}
-                        link={item.image}
-                      />
-                    );
-                  }
+                  return (
+                    <IngredientItem
+                      key={uniqid()}
+                      count={count}
+                      last={last}
+                      link={item.image}
+                    />
+                  );
                 }
               }
             )}

@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { TIngredientObj, TIngredientObjConstructor } from "../../utils/types";
-import { AppDispacth } from "../../utils/typeHooks";
+import { AppDispatch } from "../../utils/typeHooks";
 export const ADD_INGREDIENT: "ADD_INGREDIENT" = "ADD_INGREDIENT";
 export const DELETE_INGREDIENT: "DELETE_INGREDIENT" = "DELETE_INGREDIENT";
 export const ADD_TOTALPRICE: "ADD_TOTALPRICE" = "ADD_TOTALPRICE";
@@ -17,7 +17,7 @@ export const deleteIngredient = (uniqId: string) => ({
 });
 export const updateTotalPrice = () => ({ type: ADD_TOTALPRICE });
 
-export const deleteIngredientsConstructor = () => (dispatch: AppDispacth) => {
+export const deleteIngredientsConstructor = () => (dispatch: AppDispatch) => {
   dispatch({ type: DELETE_INGREDIENTS });
 };
 

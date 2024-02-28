@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { getUserOrders } from "../../services/reducers";
-import { useDispatch, useSelector } from "../../utils/typeHooks";
+import { useAppDispatch, useSelector } from "../../utils/typeHooks";
 import {
   WS_USER_ORDERS_CONNECTION_CLOSED,
   WS_USER_ORDERS_CONNECTION_START,
@@ -11,7 +11,7 @@ import { Order } from "../../components/Order/Order";
 export const ProfileOrders = () => {
   const wsUserOrders = useSelector(getUserOrders);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch({ type: WS_USER_ORDERS_CONNECTION_START });

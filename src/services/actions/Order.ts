@@ -1,4 +1,4 @@
-import { AppDispacth } from "../../utils/typeHooks";
+import { AppDispatch } from "../../utils/typeHooks";
 import { TIngredientId, TOrderInfo } from "../../utils/types";
 import { deleteIngredientsConstructor } from "./BurgerConstructor";
 
@@ -9,7 +9,7 @@ export const CLOSE_ORDER_POPUP: "CLOSE_ORDER_POPUP" = "CLOSE_ORDER_POPUP";
 
 export const getOrder =
   (requestApi: any, ingredientsId: TIngredientId) =>
-  (dispatch: AppDispacth) => {
+  (dispatch: AppDispatch) => {
     dispatch({ type: GET_ORDER_REQUEST });
     requestApi
       .addOrder(ingredientsId)
@@ -24,7 +24,7 @@ export const getOrder =
       });
   };
 
-export const closeOrderPopup = () => (dispatch: AppDispacth) => {
+export const closeOrderPopup = () => (dispatch: AppDispatch) => {
   dispatch({ type: CLOSE_ORDER_POPUP });
 };
 

@@ -91,7 +91,9 @@ class RequestApi {
     return fetch(`${BASE_URL}/orders/${number}`, {
       method: "GET",
       headers: this.getHeaders(),
-    }).then((res) => this._checkStatus<TOrderRes>(res));
+    }).then((res: any) => {
+      return this._checkStatus<TOrderRes>(res);
+    });
   }
 
   createUser(

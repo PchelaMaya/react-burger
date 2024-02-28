@@ -25,7 +25,7 @@ import {
   getTotalPrice,
 } from "../../../services/reducers";
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "../../../utils/typeHooks";
+import { useAppDispatch, useSelector } from "../../../utils/typeHooks";
 import { TIngredientObjConstructor } from "../../../utils/types";
 
 export const BurgerConstructor = () => {
@@ -33,7 +33,7 @@ export const BurgerConstructor = () => {
 
   const [ingredientBun, setIngredientBun] =
     useState<TIngredientObjConstructor | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const totalPrice = useSelector(getTotalPrice);
   const isLoggedIn = useSelector(getIsLoggedIn);

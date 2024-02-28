@@ -1,14 +1,14 @@
 import { TGetUser } from "./types";
-import { AppDispacth } from "./typeHooks";
+import { AppDispatch } from "./typeHooks";
 
 interface IRequestApi {
   getUser: () => Promise<TGetUser>;
 }
 
-type TErrFunc = () => (dispatch: AppDispacth) => void;
+type TErrFunc = () => (dispatch: AppDispatch) => void;
 
 export const getUserRequest = (
-  dispatch: AppDispacth,
+  dispatch: AppDispatch,
   requestApi: IRequestApi,
   GET_USER_REQUEST: string,
   GET_USER_SUCCESS: string,

@@ -8,10 +8,10 @@ import styles from "./Register.module.scss";
 import { useForm } from "../../hooks/useForm";
 import { Form } from "../../components/Form/Form";
 import { registerUser } from "../../services/actions/CurrentUser";
-import { useDispatch } from "../../utils/typeHooks";
+import { useAppDispatch } from "../../utils/typeHooks";
 
 export const Register = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { inputValues, handleChange } = useForm({

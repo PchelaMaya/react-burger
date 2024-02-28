@@ -16,15 +16,15 @@ import { closeIngredientPopup } from "../../services/actions/IngredientDetails";
 import { closeOrderPopup } from "../../services/actions/Order";
 import { getIngredients } from "../../services/actions/Ingredients";
 import { IngredientDetails } from "../Modals/IngredientDetails/IngredientDetails";
-import { useDispatch } from "../../utils/typeHooks";
 import { requestApi } from "../../utils/request";
 import { Feed } from "../../pages/Feed/Feed";
 import { OrderFeed } from "../OrderFeed/OrderFeed";
 import { FeedDetails } from "../Modals/FeedDetails/FeedDetails";
 import { ProfileOrders } from "../../pages/Profile/ProfileOrders";
+import { useAppDispatch } from "../../utils/typeHooks";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 

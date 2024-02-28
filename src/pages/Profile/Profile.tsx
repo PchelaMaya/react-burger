@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import styles from "./Profile.module.scss";
 import { logoutUser } from "../../services/actions/CurrentUser";
-import { useDispatch } from "../../utils/typeHooks";
+import { useAppDispatch } from "../../utils/typeHooks";
 
 export const Profile = () => {
   const [pathname, setPathname] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleClick(e: React.SyntheticEvent) {
     e.preventDefault();

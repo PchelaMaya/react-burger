@@ -3,7 +3,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { Identifier } from "dnd-core";
 import { UPDATE_SORT_INGREDIENTS } from "../../../../services/actions/BurgerConstructor";
 import styles from "./ConstructorContent.module.scss";
-import { useDispatch } from "../../../../utils/typeHooks";
+import { useAppDispatch } from "../../../../utils/typeHooks";
 import { TIngredientObj } from "../../../../utils/types";
 
 interface IBurgerConstructorContent extends IItemId {
@@ -36,7 +36,7 @@ export const ConstructorContent = ({
   index,
   children,
 }: IBurgerConstructorContent) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ref = useRef(null);
 
   const [{ isHover }, dropRef] = useDrop<IDragItem, unknown, ICollectDrop>({

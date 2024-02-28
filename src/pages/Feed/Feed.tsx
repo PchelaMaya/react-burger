@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "../../utils/typeHooks";
+import { useAppDispatch } from "../../utils/typeHooks";
 import styles from "./Feed.module.scss";
 import { OrdersFeed } from "./OrdersFeed/OrdersFeed";
 import { OrdersInfo } from "./OrdersInfo/OrdersInfo";
@@ -9,7 +9,7 @@ import {
 } from "../../services/actions/OrdersWS";
 
 export const Feed = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START });

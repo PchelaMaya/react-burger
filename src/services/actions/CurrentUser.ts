@@ -1,5 +1,5 @@
 import { requestApi } from "../../utils/request";
-import { AppDispacth } from "../../utils/typeHooks";
+import { AppDispatch } from "../../utils/typeHooks";
 import { TUserObj } from "../../utils/types";
 import { getUserRequest } from "../../utils/userRequest";
 
@@ -12,7 +12,7 @@ export const UPDATE_TOKEN: "UPDATE_TOKEN" = "UPDATE_TOKEN";
 
 export const loginUser =
   (email: string, password: string, navigate: any) =>
-  (dispatch: AppDispacth) => {
+  (dispatch: AppDispatch) => {
     dispatch({ type: GET_USER_REQUEST });
     requestApi
       .loginUser(email, password)
@@ -49,7 +49,7 @@ export const loginUser =
 
 export const registerUser =
   (name: string, email: string, password: string, navigate: any) =>
-  (dispatch: AppDispacth) => {
+  (dispatch: AppDispatch) => {
     dispatch({ type: GET_USER_REQUEST });
     requestApi
       .createUser(name, email, password)
@@ -75,7 +75,7 @@ export const registerUser =
       });
   };
 
-export const logoutUser = () => (dispatch: AppDispacth) => {
+export const logoutUser = () => (dispatch: AppDispatch) => {
   dispatch({ type: GET_USER_REQUEST });
   requestApi
     .logoutUser()
@@ -91,7 +91,7 @@ export const logoutUser = () => (dispatch: AppDispacth) => {
 
 export const updateUser =
   (name: string, email: string, password: string) =>
-  (dispatch: AppDispacth) => {
+  (dispatch: AppDispatch) => {
     dispatch({ type: GET_USER_REQUEST });
     requestApi
       .updateUser(name, email, password)
@@ -111,7 +111,7 @@ export const updateUser =
       });
   };
 
-const updateToken = () => (dispatch: AppDispacth) => {
+const updateToken = () => (dispatch: AppDispatch) => {
   requestApi
     .updateToken()
     .then((res) => {
@@ -144,7 +144,7 @@ const updateToken = () => (dispatch: AppDispacth) => {
     });
 };
 
-export const getUser = () => (dispatch: AppDispacth) => {
+export const getUser = () => (dispatch: AppDispatch) => {
   getUserRequest(
     dispatch,
     requestApi,
