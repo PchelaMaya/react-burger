@@ -59,10 +59,10 @@ export const BurgerConstructor = () => {
       const ingredientsOrderId = [...ingredientsConstructor].map((item) => {
         return item._id;
       });
-      const IngredientId = {
+      const ingredientsId = {
         ingredients: ingredientsOrderId,
       };
-      dispatch(getOrder(requestApi, IngredientId));
+      dispatch(getOrder(requestApi, ingredientsId));
     } else {
       navigate("/login");
     }

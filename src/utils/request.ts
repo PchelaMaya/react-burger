@@ -83,7 +83,7 @@ class RequestApi {
       },
       body: JSON.stringify(ingredientsObj),
     }).then((res: any) => {
-      return this._checkStatus<TOrderAdd>(res);
+      return res;
     });
   }
 

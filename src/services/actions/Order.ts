@@ -1,5 +1,5 @@
 import { AppDispatch } from "../../utils/typeHooks";
-import { TIngredientId, TOrderInfo } from "../../utils/types";
+import { TIngredientId, TOrderAdd, TOrderInfo } from "../../utils/types";
 import { deleteIngredientsConstructor } from "./BurgerConstructor";
 
 export const GET_ORDER_FAILED: "GET_ORDER_FAILED" = "GET_ORDER_FAILED";
@@ -13,7 +13,7 @@ export const getOrder =
     dispatch({ type: GET_ORDER_REQUEST });
     requestApi
       .addOrder(ingredientsId)
-      .then((res: number) => {
+      .then((res: TOrderAdd) => {
         dispatch({ type: GET_ORDER_SUCCESS, payload: res });
       })
       .then(() => {
