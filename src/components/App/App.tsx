@@ -8,7 +8,7 @@ import { ForgotPassword } from "../../pages/ForgotPassword/ForgotPassword";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getUser } from "../../services/actions/CurrentUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Profile } from "../../pages/Profile/Profile";
 import { ProfileForm } from "../../pages/Profile/ProfileForm";
 import { IngredientModal } from "../../pages/IngredientModal/IngredientModal";
@@ -16,13 +16,23 @@ import { closeIngredientPopup } from "../../services/actions/IngredientDetails";
 import { closeOrderPopup } from "../../services/actions/Order";
 import { getIngredients } from "../../services/actions/Ingredients";
 import { IngredientDetails } from "../Modals/IngredientDetails/IngredientDetails";
-import { useDispatch } from "../../utils/typeHooks";
 import { requestApi } from "../../utils/request";
+import { Feed } from "../../pages/Feed/Feed";
+import { OrderFeed } from "../OrderFeed/OrderFeed";
+import { FeedDetails } from "../Modals/FeedDetails/FeedDetails";
+import { ProfileOrders } from "../../pages/Profile/ProfileOrders";
+import { useAppDispatch } from "../../utils/typeHooks";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [pathname, setPathname] = useState("");
+
+  useEffect(() => {
+    setPathname(location.pathname);
+  }, [location]);
 
   const closePopup = () => {
     dispatch(closeIngredientPopup());
@@ -70,15 +80,41 @@ function App() {
               index
               element={<ProtectedRoute element={<ProfileForm />} />}
             />
+            <Route
+              path="orders"
+              element={<ProtectedRoute element={<ProfileOrders />} />}
+            />
+            <Route
+              path=":number"
+              element={<ProtectedRoute element={<OrderFeed />} />}
+            />
           </Route>
           <Route path="/ingredient/:id" element={<IngredientDetails />} />
-          {/* <Route path=".*" element={<p>Страница отдыхает в космосе.</p>} /> */}
+          <Route path="/feed" element={<Feed />} />
+          <Route path="/feed/:number" element={<OrderFeed />} />
         </Routes>
         <Routes>
           {background && (
             <Route
               path="/ingredient/:id"
               element={<IngredientModal onClose={closePopup} />}
+            />
+          )}
+          {background && (
+            <Route
+              path="/feed/:number"
+              element={<FeedDetails onClose={closePopup} />}
+            />
+          )}
+          {background && pathname === "/profile/*" && (
+            <Route
+              path="/profile/orders/:id"
+              element={
+                <ProtectedRoute
+                  element={<FeedDetails onClose={closePopup} />}
+                  onlyUnAuth
+                />
+              }
             />
           )}
         </Routes>

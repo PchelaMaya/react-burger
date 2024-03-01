@@ -1,0 +1,10 @@
+.feed {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+
+  .feedcontent {
+    gap: 60px;
+    display: flex;
+  }
+}

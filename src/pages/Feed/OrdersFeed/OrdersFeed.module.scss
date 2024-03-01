@@ -1,0 +1,16 @@
+.ordersfeed {
+  min-width: 636px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+
+  .ordersfeedcontent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+    max-height: calc(100vh - 330px);
+    max-width: 600px;
+    scroll-behavior: smooth;
+  }
+}

@@ -1,5 +1,5 @@
 import { requestApi } from "../../utils/request";
-import { AppDispacth } from "../../utils/typeHooks";
+import { AppDispatch } from "../../utils/typeHooks";
 import { TUserObj } from "../../utils/types";
 import { getUserRequest } from "../../utils/userRequest";
 
@@ -12,7 +12,7 @@ export const UPDATE_TOKEN: "UPDATE_TOKEN" = "UPDATE_TOKEN";
 
 export const loginUser =
   (email: string, password: string, navigate: any) =>
-  (dispatch: AppDispacth) => {
+  (dispatch: AppDispatch) => {
     dispatch({ type: GET_USER_REQUEST });
     requestApi
       .loginUser(email, password)
@@ -49,7 +49,7 @@ export const loginUser =
 
 export const registerUser =
   (name: string, email: string, password: string, navigate: any) =>
-  (dispatch: AppDispacth) => {
+  (dispatch: AppDispatch) => {
     dispatch({ type: GET_USER_REQUEST });
     requestApi
       .createUser(name, email, password)
@@ -75,7 +75,7 @@ export const registerUser =
       });
   };
 
-export const logoutUser = () => (dispatch: AppDispacth) => {
+export const logoutUser = () => (dispatch: AppDispatch) => {
   dispatch({ type: GET_USER_REQUEST });
   requestApi
     .logoutUser()
@@ -91,7 +91,7 @@ export const logoutUser = () => (dispatch: AppDispacth) => {
 
 export const updateUser =
   (name: string, email: string, password: string) =>
-  (dispatch: AppDispacth) => {
+  (dispatch: AppDispatch) => {
     dispatch({ type: GET_USER_REQUEST });
     requestApi
       .updateUser(name, email, password)
@@ -111,7 +111,7 @@ export const updateUser =
       });
   };
 
-const updateToken = () => (dispatch: AppDispacth) => {
+const updateToken = () => (dispatch: AppDispatch) => {
   requestApi
     .updateToken()
     .then((res) => {
@@ -144,7 +144,7 @@ const updateToken = () => (dispatch: AppDispacth) => {
     });
 };
 
-export const getUser = () => (dispatch: AppDispacth) => {
+export const getUser = () => (dispatch: AppDispatch) => {
   getUserRequest(
     dispatch,
     requestApi,
@@ -154,7 +154,7 @@ export const getUser = () => (dispatch: AppDispacth) => {
   );
 };
 
-export const forgotPassword = (email: string, func: () => void) => {
+export const forgotPassword = (email: string, func: () => void) => () => {
   requestApi
     .forgotPassword(email)
     .then((res) => {
@@ -167,19 +167,51 @@ export const forgotPassword = (email: string, func: () => void) => {
     });
 };
 
-export const resetPassword = (
-  password: string,
-  token: string,
-  func: () => void
-) => {
-  requestApi
-    .resetPassword(password, token)
-    .then((res) => {
-      if (res && res.success) {
-        func();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const resetPassword =
+  (password: string, token: string, func: () => void) => () => {
+    requestApi
+      .resetPassword(password, token)
+      .then((res) => {
+        if (res && res.success) {
+          func();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+type TGetUserRequestAction = {
+  readonly type: typeof GET_USER_REQUEST;
 };
+
+type TGetUserSuccessAction = {
+  readonly type: typeof GET_USER_SUCCESS;
+  readonly payload: {
+    user: TUserObj;
+    accessToken: string | null;
+    refreshToken: string | null;
+  };
+};
+
+type TGetUserFailedAction = {
+  readonly type: typeof GET_USER_FAILED;
+};
+
+type TDeleteUserAction = {
+  readonly type: typeof DELETE_USER;
+};
+type TUPDATE_TOKEN = {
+  readonly type: typeof UPDATE_TOKEN;
+  readonly payload: {
+    accessToken: string | null;
+    refreshToken: string | null;
+  };
+};
+
+export type TCurrentUserActions =
+  | TGetUserRequestAction
+  | TGetUserSuccessAction
+  | TGetUserFailedAction
+  | TDeleteUserAction
+  | TUPDATE_TOKEN;

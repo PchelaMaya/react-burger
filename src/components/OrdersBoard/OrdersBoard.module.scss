@@ -1,0 +1,18 @@
+.ordersboard {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .orders {
+    max-height: 150px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .orderNumber {
+      color: #0cc;
+    }
+  }
+}

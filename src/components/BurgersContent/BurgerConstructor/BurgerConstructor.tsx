@@ -21,25 +21,23 @@ import { getOrder } from "../../../services/actions/Order";
 import {
   getBurgerConstructorIngredients,
   getIsLoggedIn,
-  getTotalPice,
+  getOrderLoading,
+  getTotalPrice,
 } from "../../../services/reducers";
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "../../../utils/typeHooks";
-import { TIngredientObj } from "../../../utils/types";
-
-type TIngredientObjConstructor = TIngredientObj & {
-  readonly uniqId: string;
-};
+import { useAppDispatch, useSelector } from "../../../utils/typeHooks";
+import { TIngredientObjConstructor } from "../../../utils/types";
 
 export const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const [ingredientBun, setIngredientBun] =
     useState<TIngredientObjConstructor | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const totalPrice = useSelector(getTotalPice);
+  const totalPrice = useSelector(getTotalPrice);
   const isLoggedIn = useSelector(getIsLoggedIn);
+  const orderIsLoading = useSelector(getOrderLoading);
   const ingredientsConstructor: Array<TIngredientObjConstructor> = useSelector(
     getBurgerConstructorIngredients
   );
@@ -61,10 +59,10 @@ export const BurgerConstructor = () => {
       const ingredientsOrderId = [...ingredientsConstructor].map((item) => {
         return item._id;
       });
-      const IngredientId = {
+      const ingredientsId = {
         ingredients: ingredientsOrderId,
       };
-      dispatch(getOrder(requestApi, IngredientId));
+      dispatch(getOrder(requestApi, ingredientsId));
     } else {
       navigate("/login");
     }
@@ -161,7 +159,7 @@ export const BurgerConstructor = () => {
             size="large"
             extraClass={classButton}
             onClick={clickOrderButton}
-            disabled={!ingredientBun}
+            disabled={ingredientsConstructor.length < 1 || orderIsLoading}
           >
             Оформить заказ
           </Button>

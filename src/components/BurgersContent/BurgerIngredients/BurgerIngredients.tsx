@@ -5,15 +5,14 @@ import { IngredientContent } from "./IngredientsContent/IngredientContent";
 import styles from "./BurgerIngredients.module.scss";
 import { useSelector } from "../../../utils/typeHooks";
 import { TIngredientObj } from "../../../utils/types";
+import { getIngredients } from "../../../services/reducers";
 
 type TIngredientType = "bun" | "sauce" | "main";
 
 export const BurgerIngredients = () => {
   const [current, setCurrent] = useState("Булки");
 
-  const ingredients: Array<TIngredientObj> = useSelector(
-    (state) => state.ingredients.ingredients
-  );
+  const ingredients: Array<TIngredientObj> = useSelector(getIngredients);
 
   const containerRef = useRef<HTMLDivElement>(null);
 

@@ -3,14 +3,13 @@ import {
   useSelector as selector,
   TypedUseSelectorHook,
 } from "react-redux";
-import { store } from "../services/store";
 import { rootReducer } from "../services/reducers/rootReducer";
+import store from "../services/store";
 
-export type AppDispacth = typeof store.dispatch;
-
-export type DispatchFunc = () => AppDispacth;
 export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;
+export type DispatchFunc = () => AppDispatch;
 
 export const useSelector: TypedUseSelectorHook<RootState> = selector;
 
-export const useDispatch: DispatchFunc = dispatch;
+export const useAppDispatch: () => AppDispatch = dispatch;

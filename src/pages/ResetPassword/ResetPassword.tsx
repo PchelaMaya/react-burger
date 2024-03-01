@@ -9,10 +9,10 @@ import { Form } from "../../components/Form/Form";
 
 import { resetPassword } from "../../services/actions/CurrentUser";
 import { getIsOpenResetPasswordPage } from "../../services/reducers";
-import { useDispatch, useSelector } from "../../utils/typeHooks";
+import { useAppDispatch, useSelector } from "../../utils/typeHooks";
 
 export const ResetPassword = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isOpenResetPasswordPage = useSelector(getIsOpenResetPasswordPage);
 

@@ -1,21 +1,30 @@
+import { TOrderInfo } from "../../utils/types";
 import {
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   CLOSE_ORDER_POPUP,
+  TOrderActions,
 } from "../actions/Order";
-const initialState = {
+
+type TOrderState = {
+  orders: Array<TOrderInfo>;
+  lastNumberOrder: number | null;
+  isLoading: boolean;
+  isOpenOrderPopup: boolean;
+};
+
+const initialState: TOrderState = {
   orders: [],
   lastNumberOrder: null,
   isLoading: false,
-  error: null,
   isOpenOrderPopup: false,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, isOpenOrderPopup: true };
     }
     case GET_ORDER_SUCCESS: {
       return {

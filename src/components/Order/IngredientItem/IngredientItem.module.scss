@@ -1,0 +1,20 @@
+.container {
+  margin-left: -20px;
+  border-radius: 50%;
+  border: 2px solid var(--button-normal, #801ab2);
+  background: var(--interface-bg, #131316);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.count {
+  position: absolute;
+}
+
+.image {
+  width: 64px;
+  height: 56px;
+  object-fit: cover;
+}

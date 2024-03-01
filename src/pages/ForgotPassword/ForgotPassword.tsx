@@ -5,10 +5,10 @@ import { useForm } from "../../hooks/useForm";
 import { Form } from "../../components/Form/Form";
 import { forgotPassword } from "../../services/actions/CurrentUser";
 import { openResetPasswordPage } from "../../services/actions/ResetPassword";
-import { useDispatch } from "../../utils/typeHooks";
+import { useAppDispatch } from "../../utils/typeHooks";
 
 export const ForgotPassword = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { inputValues, handleChange } = useForm({ email: "" });
