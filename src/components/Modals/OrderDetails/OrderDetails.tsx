@@ -17,6 +17,7 @@ export const OrderDetails = () => {
         <div className={styles.modalorder}>
           <h3
             className={`text text_type_digits-large mt-10 mb-8 ${styles.number}`}
+            data-test="order-number"
           >
             {numberOrder}
           </h3>

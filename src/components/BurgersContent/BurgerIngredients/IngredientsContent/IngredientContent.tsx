@@ -55,6 +55,7 @@ export const IngredientContent = ({
         state={{ background: location }}
         className={styles.ingredientitem}
         ref={dragRef}
+        data-test="ingredient-item"
       >
         <div className={styles.image}>
           <img src={image} alt={name} />
@@ -63,7 +64,12 @@ export const IngredientContent = ({
         <p className="text text_type_digits-default">
           {price} <CurrencyIcon type="primary" />
         </p>
-        <p className="text text_type_main-default">{name}</p>
+        <p
+          className="text text_type_main-default"
+          data-test="ingredient-item-name"
+        >
+          {name}
+        </p>
       </Link>
     </>
   );

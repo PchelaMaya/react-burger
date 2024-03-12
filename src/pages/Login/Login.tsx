@@ -30,17 +30,20 @@ export const Login = () => {
         textButton="Войти"
         formName="formLogin"
         handleSubmitSend={handleSubmitSend}
+        data-test="form-login"
       >
         <EmailInput
           placeholder="E-mail"
           value={inputValues.email}
           onChange={handleChange}
           name="email"
+          data-testid="email_input"
         />
         <PasswordInput
           value={inputValues.password}
           onChange={handleChange}
           name="password"
+          data-testid="password_input"
         />
       </Form>
 
