@@ -16,8 +16,4 @@ export const datacy = {
     ingredientName: "[data-test=ingredient-item-name]",
     ingredientDetailsName: "[data-test=ingredient-details-name]",
   },
-  login: {
-    inputEmail: "[data-testid=input-email]",
-    inputPassword: "[data-testid=input-pass]",
-  },
 };

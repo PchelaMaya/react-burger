@@ -15,7 +15,7 @@ type TWSOrdersState = {
   totalToday: number;
 };
 
-const initialState: TWSOrdersState = {
+export const initialState: TWSOrdersState = {
   WSConnected: false,
   userOrders: [],
   total: 0,

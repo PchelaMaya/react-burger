@@ -14,7 +14,7 @@ type TOrderState = {
   isOpenOrderPopup: boolean;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   orders: [],
   lastNumberOrder: null,
   isLoading: false,

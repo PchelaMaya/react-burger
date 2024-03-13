@@ -4,16 +4,9 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
 } from "../actions/Order";
-import { orderReducer } from "../reducers/Order";
+import { initialState, orderReducer } from "../reducers/Order";
 
 describe("Order", () => {
-  const initialState = {
-    orders: [],
-    lastNumberOrder: null,
-    isLoading: false,
-    isOpenOrderPopup: false,
-  };
-
   test("test initial state", () => {
     expect(orderReducer(undefined, {})).toEqual(initialState);
   });

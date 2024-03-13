@@ -5,20 +5,9 @@ import {
   GET_USER_SUCCESS,
   UPDATE_TOKEN,
 } from "../actions/CurrentUser";
-import currentUserReducer from "../reducers/CurrentUser";
+import currentUserReducer, { initialState } from "../reducers/CurrentUser";
 
 describe("CurrentUser", () => {
-  const initialState = {
-    refreshToken: null,
-    accessToken: null,
-    isLoading: false,
-    currentUser: {
-      name: "",
-      email: "",
-    },
-    isLoggedIn: false,
-  };
-
   test("test initial state", () => {
     expect(currentUserReducer(undefined, {})).toEqual(initialState);
   });

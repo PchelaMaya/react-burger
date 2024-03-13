@@ -7,7 +7,7 @@ type TResetPasswordState = {
   isOpenResetPasswordPage: boolean;
 };
 
-const initialState: TResetPasswordState = {
+export const initialState: TResetPasswordState = {
   isOpenResetPasswordPage: false,
 };
 

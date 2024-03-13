@@ -1,8 +1,10 @@
 import { datacy } from "../support/constants";
 
+const baseTestUrl = "http://localhost:3000";
+
 describe("Открытие модальных окон", () => {
   before(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit(baseTestUrl);
     cy.viewport(1920, 1280);
   });
   it("should open the modal", () => {
@@ -22,9 +24,10 @@ describe("Отправка заказа", () => {
     const email = "polo@mail.ru";
     const password = "qweqweqwe";
     cy.viewport(1920, 1280);
-    cy.visit("http://localhost:3000/#/login");
-    cy.get(datacy.login.inputEmail).type(`${email}`);
-    cy.get(datacy.login.inputPassword).type(`${password}{enter}`);
+    cy.visit(`${baseTestUrl}/login`);
+    cy.get("input").first().type(email);
+    cy.get("input").last().type(password);
+    cy.get("button").first().click();
   });
 
   it("Заказ должен отправляться", () => {

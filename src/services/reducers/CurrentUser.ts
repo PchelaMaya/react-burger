@@ -16,7 +16,7 @@ type TCurrentUserState = {
   accessToken: string | null;
 };
 
-const initialState: TCurrentUserState = {
+export const initialState: TCurrentUserState = {
   isLoading: false,
   currentUser: {
     name: "",

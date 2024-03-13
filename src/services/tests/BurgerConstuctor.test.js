@@ -5,7 +5,9 @@ import {
   DELETE_INGREDIENTS,
   UPDATE_SORT_INGREDIENTS,
 } from "../actions/BurgerConstructor";
-import burgerConstructorReducer from "../reducers/BurgerConstructor";
+import burgerConstructorReducer, {
+  initialState,
+} from "../reducers/BurgerConstructor";
 
 describe("burger-constructor", () => {
   const testBurgerConstructorBun = {
@@ -38,11 +40,6 @@ describe("burger-constructor", () => {
     image_large: "https://code.s3.yandex.net/react/code/bun-01-large.png",
     __v: 0,
     uniqId: "1234",
-  };
-
-  const initialState = {
-    constructorIngredients: [],
-    totalPrice: 0,
   };
 
   test("test initial state", () => {

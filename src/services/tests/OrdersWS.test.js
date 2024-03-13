@@ -4,15 +4,9 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
 } from "../actions/OrdersWS";
-import wsOrdersReducer from "../reducers/OrdersWS";
+import wsOrdersReducer, { initialState } from "../reducers/OrdersWS";
 
 describe("OrdersWS", () => {
-  const initialState = {
-    WSConnected: false,
-    orders: [],
-    total: 0,
-    totalToday: 0,
-  };
   const orders = ["test", "7777"];
 
   test("test initial state", () => {

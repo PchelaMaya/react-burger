@@ -3,7 +3,7 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
 } from "../actions/Ingredients";
-import { ingredientsReducer } from "../reducers/Ingredients";
+import { ingredientsReducer, initialState } from "../reducers/Ingredients";
 
 describe("Ingredients", () => {
   const testData = {
@@ -21,11 +21,6 @@ describe("Ingredients", () => {
     image_large:
       "https://code.s3.yandex.net/react/code/mineral_rings-large.png",
     __v: 0,
-  };
-
-  const initialState = {
-    ingredients: [],
-    isLoading: false,
   };
 
   test("test initial state", () => {

@@ -1,11 +1,10 @@
 import { CLOSE_INGREDIENT_POPUP } from "../actions/IngredientDetails";
-import { ingredientDetailsReducer } from "../reducers/IngredientDetails";
+import {
+  ingredientDetailsReducer,
+  initialState,
+} from "../reducers/IngredientDetails";
 
 describe("IngredientDetails", () => {
-  const initialState = {
-    isPopupOpened: false,
-  };
-
   test("test initial state", () => {
     expect(ingredientDetailsReducer(undefined, {})).toEqual(initialState);
   });

@@ -1,11 +1,7 @@
 import { GET_RESET_PASSWORD_PAGE } from "../actions/ResetPassword";
-import resetPasswordReducer from "../reducers/ResetPassword";
+import resetPasswordReducer, { initialState } from "../reducers/ResetPassword";
 
 describe("ResetPassword", () => {
-  const initialState = {
-    isOpenResetPasswordPage: false,
-  };
-
   test("test initial state", () => {
     expect(resetPasswordReducer(undefined, {})).toEqual(initialState);
   });

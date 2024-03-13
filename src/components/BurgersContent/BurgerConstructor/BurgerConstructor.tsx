@@ -94,12 +94,9 @@ export const BurgerConstructor = () => {
 
   return (
     <section className={`mt-25 ${styles.burgerconstructor}`}>
-      <div ref={drop}>
+      <div ref={drop} data-test="constructor-content">
         {ingredientsConstructor.length > 0 ? (
-          <div
-            className={styles.constructorcontent}
-            data-test="constructor-content"
-          >
+          <div className={styles.constructorcontent}>
             {ingredientBun && (
               <div className={styles.item} data-test="content-bun-top">
                 <ConstructorElement
