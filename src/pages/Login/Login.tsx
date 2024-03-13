@@ -30,7 +30,6 @@ export const Login = () => {
         textButton="Войти"
         formName="formLogin"
         handleSubmitSend={handleSubmitSend}
-        data-test="form-login"
       >
         <EmailInput
           placeholder="E-mail"
