@@ -5,6 +5,7 @@ import {
   ADD_TOTALPRICE,
   UPDATE_SORT_INGREDIENTS,
   TBurgerConstructorActions,
+  DELETE_INGREDIENTS,
 } from "../actions/BurgerConstructor";
 
 type TBurgerConstructorState = {
@@ -12,7 +13,7 @@ type TBurgerConstructorState = {
   totalPrice: number;
 };
 
-const initialState: TBurgerConstructorState = {
+export const initialState: TBurgerConstructorState = {
   constructorIngredients: [],
   totalPrice: 0,
 };
@@ -39,6 +40,11 @@ const burgerConstructorReducer = (
         ),
       };
     }
+    case DELETE_INGREDIENTS:
+      return {
+        ...state,
+        constructorIngredients: [],
+      };
     case ADD_TOTALPRICE: {
       return {
         ...state,

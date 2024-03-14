@@ -1,8 +1,45 @@
-# Getting Started with Create React App
+# React Burger
+
+Проект React Burger [https://pchelamaya.github.io/react-burger] - проект представляет из себя веб-приложение для заказа бургеров с личным кабинетом с возможностью редактирования.
+
+# Используемые технологии
+
+## Frontend
+
+### React: JavaScript-библиотека для создания пользовательских интерфейсов.
+
+### React Router Dom: Навигация в одностраничных приложениях React.
+
+### Redux Toolkit: Официальный пакет Redux для более простого и удобного управления состоянием приложения.
+
+### React Redux: Библиотека для интеграции Redux с React.
+
+### @ya.praktikum/react-developer-burger-ui-components: Набор готовых компонентов UI для создания интерфейса приложения.
+
+## Тестирование
+
+### Jest: Фреймворк для тестирования JavaScript-кода.
+
+### React Testing Library: Инструмент для тестирования React-компонентов и приложений.
+
+### Cypress: Инструмент для функционального тестирования веб-приложений.
+
+## Стилизация
+
+### Sass: Препроцессор для CSS.
+
+## Другие инструменты
+
+### TypeScript: Статически типизированный JavaScript для улучшения производительности и поддержки кода.
+
+### WebSocket (ws): Протокол связи, используемый для обмена данными между клиентом и сервером в реальном времени.
+
+# Реализация
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Демо-версия [https://pchelamaya.github.io/react-burger]
 
-## Available Scripts
+## Запуск проекта
 
 In the project directory, you can run:
 

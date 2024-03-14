@@ -7,7 +7,7 @@ type TIngredientDetailsState = {
   isPopupOpened: boolean;
 };
 
-const initialState: TIngredientDetailsState = {
+export const initialState: TIngredientDetailsState = {
   isPopupOpened: false,
 };
 

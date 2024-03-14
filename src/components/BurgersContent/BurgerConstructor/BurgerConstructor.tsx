@@ -27,6 +27,7 @@ import {
 import { useNavigate } from "react-router";
 import { useAppDispatch, useSelector } from "../../../utils/typeHooks";
 import { TIngredientObjConstructor } from "../../../utils/types";
+import { nanoid } from "@reduxjs/toolkit";
 
 export const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -83,7 +84,7 @@ export const BurgerConstructor = () => {
           }
         });
       }
-      dispatch(addIngredient(ingredient));
+      dispatch(addIngredient(ingredient, nanoid()));
       dispatch(updateTotalPrice());
     },
     collect: (monitor) => ({
@@ -91,15 +92,13 @@ export const BurgerConstructor = () => {
     }),
   });
 
-  const backgroundopacity = isHover ? styles.backgroundopacity : "";
-
   return (
     <section className={`mt-25 ${styles.burgerconstructor}`}>
-      <div className={backgroundopacity} ref={drop}>
+      <div ref={drop} data-test="constructor-content">
         {ingredientsConstructor.length > 0 ? (
           <div className={styles.constructorcontent}>
             {ingredientBun && (
-              <div className={styles.item}>
+              <div className={styles.item} data-test="content-bun-top">
                 <ConstructorElement
                   type="top"
                   text={`${ingredientBun?.name} (верх)`}
@@ -110,7 +109,7 @@ export const BurgerConstructor = () => {
               </div>
             )}
 
-            <div className={styles.constructorcontent}>
+            <div className={styles.constructorcontent} data-test="content-main">
               {ingredientsConstructor.map((item, index) => {
                 if (item.type === "main" || item.type === "sauce") {
                   return (
@@ -132,14 +131,16 @@ export const BurgerConstructor = () => {
             </div>
 
             {ingredientBun && (
-              <ConstructorElement
-                key={ingredientBun.uniqId}
-                type="bottom"
-                isLocked={true}
-                text={`${ingredientBun.name} (низ)`}
-                price={ingredientBun.price}
-                thumbnail={ingredientBun.image}
-              />
+              <div data-test="content-bun-bottom">
+                <ConstructorElement
+                  key={ingredientBun.uniqId}
+                  type="bottom"
+                  isLocked={true}
+                  text={`${ingredientBun.name} (низ)`}
+                  price={ingredientBun.price}
+                  thumbnail={ingredientBun.image}
+                />
+              </div>
             )}
           </div>
         ) : (
@@ -160,6 +161,7 @@ export const BurgerConstructor = () => {
             extraClass={classButton}
             onClick={clickOrderButton}
             disabled={ingredientsConstructor.length < 1 || orderIsLoading}
+            data-test="btn-order"
           >
             Оформить заказ
           </Button>

@@ -10,10 +10,10 @@ export const Modal = ({ onClose, children }: TModal) => {
   return createPortal(
     <>
       <ModalOverlay onClose={onClose} />
-      <div className={styles.modalcontent}>
-        <div className={styles.closebutton}>
+      <div className={styles.modalcontent} data-testid="modal">
+        <button className={styles.closebutton} data-testid="modal-close">
           <CloseIcon onClick={onClose} type="primary" />
-        </div>
+        </button>
         {children}
       </div>
     </>,

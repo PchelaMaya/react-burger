@@ -32,7 +32,10 @@ export const IngredientDetails = () => {
       />
 
       <div className={styles.infocontent}>
-        <p className="text text_type_main-medium mt-2">
+        <p
+          className="text text_type_main-medium mt-2"
+          data-test="ingredient-details-name"
+        >
           {selectedIngredient?.name}
         </p>
         <div className={`mt-8 ${styles.infodescription}`}>
