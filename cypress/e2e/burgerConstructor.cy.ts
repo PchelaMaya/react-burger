@@ -1,6 +1,6 @@
 import { datacy } from "../support/constants";
 
-const baseTestUrl = "http://localhost:3000";
+const baseTestUrl = "http://localhost:3000/#";
 
 describe("Открытие модальных окон", () => {
   before(() => {
@@ -24,7 +24,7 @@ describe("Отправка заказа", () => {
     const email = "polo@mail.ru";
     const password = "qweqweqwe";
     cy.viewport(1920, 1280);
-    cy.visit(`${baseTestUrl}/#/login`);
+    cy.visit(`${baseTestUrl}/login`);
     cy.get("input").first().type(email);
     cy.get("input").last().type(password);
     cy.get("button").first().click();
