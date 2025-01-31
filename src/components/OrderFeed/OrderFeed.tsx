@@ -10,6 +10,7 @@ import { useSelector } from "../../utils/typeHooks";
 import { getIngredients } from "../../services/reducers";
 import { TIngredientObj, TOrder } from "../../utils/types";
 import { requestApi } from "../../utils/request";
+import { CanceledOrder } from "./CanceledOrder";
 
 export const OrderFeed = () => {
   const { number } = useParams();
@@ -77,6 +78,7 @@ export const OrderFeed = () => {
                   Выполнен
                 </p>
               )}
+              {order.status === "cancelled" && <CanceledOrder />}
             </div>
             <div className={styles.ordercontent}>
               <p className={`text text_type_main-medium mt-15`}>Состав:</p>
